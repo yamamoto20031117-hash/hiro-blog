@@ -1,9 +1,9 @@
 ---
-title: "【名古屋・原付】Uber Eats配達員は時給2000円が狙える｜大学生の僕が実際に稼いだリアルな数字"
-description: "名古屋市内で原付を使ってUber Eats配達をしている大学生が、実際の稼ぎをリアルに公開。時給2000円を達成するためのエリア・時間帯・コツを解説します。"
+title: "【Uber Eats 時給】原付配達で時給2000円｜名古屋の大学生が稼いだリアルな収入を公開"
+description: "Uber Eats配達員の時給はいくら？名古屋で原付バイクを使って配達している大学生が、実際の収入・稼げるエリア・時間帯・コツをリアルに公開。大学生のバイトより効率的に稼ぐ方法を解説。"
 pubDate: 2024-12-15
 category: "Uber稼ぎ方"
-tags: ["UberEats", "名古屋", "原付", "大学生", "副業", "時給2000円"]
+tags: ["Uber Eats", "UberEats 時給", "Uber Eats 配達員", "名古屋", "原付", "大学生 バイト", "副業", "時給2000円", "Uber 稼げる", "配達バイト"]
 featured: true
 heroImage: "/images/hero-nagoya-uber.svg"
 ---
