@@ -70,28 +70,33 @@
       <p class="text-gray-400 mt-1.5 leading-tight">都道府県タップで市区町村を表示</p>
     </div>
 
-    <!-- ポップアップ -->
+    <!-- 情報パネル（右下固定カード） -->
     <div id="map-popup"
-         class="hidden absolute z-20 bg-white rounded-xl shadow-xl border border-gray-100 p-3 min-w-[190px] pointer-events-none"
-         style="transform:translate(-50%,-115%);">
-      <p id="pp-city"    class="font-bold text-gray-900 text-sm mb-0"></p>
-      <p id="pp-pref"    class="text-[10px] text-gray-400 mb-1"></p>
-      <p id="pp-rate"    class="text-xl font-black mb-0"></p>
-      <p id="pp-tier"    class="text-[10px] font-semibold mb-1 px-1.5 py-0.5 rounded-full w-fit"></p>
-      <div id="pp-breakdown" class="hidden border-t border-gray-100 mt-1.5 pt-1.5 space-y-0.5">
-        <p class="text-[10px] text-gray-400 font-bold">売上の内訳（平均）</p>
-        <div class="flex justify-between text-[11px]">
-          <span class="text-gray-500">正味の料金</span>
-          <span id="pp-base" class="font-bold text-gray-700"></span>
+         class="hidden absolute bottom-3 right-3 z-20 bg-white/95 backdrop-blur rounded-xl shadow-xl border border-gray-200 pointer-events-auto"
+         style="width:210px;">
+      <button id="pp-close" type="button"
+        class="absolute top-1 right-1.5 text-gray-300 hover:text-gray-500 text-sm leading-none">✕</button>
+      <div class="px-3 py-2.5">
+        <p class="flex items-baseline gap-1 mb-0.5">
+          <span id="pp-city" class="font-bold text-gray-900 text-sm"></span>
+          <span id="pp-pref" class="text-[10px] text-gray-400"></span>
+        </p>
+        <p id="pp-rate" class="text-xl font-black leading-tight"></p>
+        <p id="pp-tier" class="text-[10px] font-semibold px-1.5 py-0.5 rounded-full w-fit mt-0.5"></p>
+        <div id="pp-breakdown" class="hidden border-t border-gray-100 mt-2 pt-1.5 space-y-0.5">
+          <p class="text-[10px] text-gray-400 font-bold">内訳（平均）</p>
+          <div class="flex justify-between text-[11px]">
+            <span class="text-gray-500">正味の料金</span>
+            <span id="pp-base" class="font-bold text-gray-700"></span>
+          </div>
+          <div class="flex justify-between text-[11px]">
+            <span class="text-gray-500">プロモーション</span>
+            <span id="pp-promo" class="font-bold text-blue-600"></span>
+          </div>
         </div>
-        <div class="flex justify-between text-[11px]">
-          <span class="text-gray-500">プロモーション</span>
-          <span id="pp-promo" class="font-bold text-blue-600"></span>
-        </div>
+        <p id="pp-count"   class="text-[11px] text-gray-400 mt-1.5"></p>
+        <p id="pp-vehicle" class="text-[11px] text-gray-400"></p>
       </div>
-      <p id="pp-count"   class="text-xs text-gray-400 mt-1"></p>
-      <p id="pp-vehicle" class="text-xs text-gray-400"></p>
-      <div class="absolute bottom-[-6px] left-1/2 -translate-x-1/2 w-3 h-3 bg-white border-r border-b border-gray-100 rotate-45"></div>
     </div>
 
     <!-- ローディング -->
@@ -526,10 +531,7 @@
           .attr('opacity', cityOpacity)
           .attr('font-size', `${10 / k}px`);
 
-        // ポップアップをSVG座標に追従させる
-        if (popupVisible && popupSvgX !== null && popupSvgY !== null) {
-          updatePopupPosition(event.transform);
-        }
+        // ポップアップは下部固定のため追従不要
 
         // ズーム時の自動ドリルダウン（k>=6で中央の都道府県を展開）
         // resettingToPref中はトランジションでk>=6を通過しても無視
@@ -642,7 +644,9 @@
         .on('click', (event: MouseEvent, d: any) => {
           event.stopPropagation();
           const name = getCityName(d.properties);
-          const r = matchCityRate(d.properties, cityRates);
+          // 毎回最新のフィルター条件で再計算（クロージャの古いcityRatesを使わない）
+          const freshRates = aggregateCity(prefName);
+          const r = matchCityRate(d.properties, freshRates);
           showPopup(event, name, prefName,
             r ? r.avg : 0, r ? r.count : 0,
             r ? r.vehicles.join('・') : '',
@@ -836,38 +840,7 @@
     (btnC as HTMLButtonElement).disabled = true;
   }
 
-  // ===== ポップアップ位置更新（SVG座標→画面座標変換＋境界クランプ）=====
-  function updatePopupPosition(transform?: any) {
-    if (!popupVisible || popupSvgX === null || popupSvgY === null) return;
-    const popup = document.getElementById('map-popup')!;
-    const wrap  = document.getElementById('map-wrap')!;
-    const W = wrap.offsetWidth, H = wrap.offsetHeight;
-
-    // 現在のズーム変換を取得
-    const t = transform || (d3 && svg ? d3.zoomTransform(svg.node()) : {x:0, y:0, k:1});
-    // SVG空間の座標を画面座標に変換
-    const screenX = t.x + popupSvgX * t.k;
-    const screenY = t.y + popupSvgY * t.k;
-
-    // ポップアップのサイズを考慮してクランプ
-    const pw = popup.offsetWidth || 190;
-    const ph = popup.offsetHeight || 150;
-    const margin = 8;
-
-    // クランプ: ポップアップが map-wrap の外に出ないように
-    let clampedX = Math.max(pw / 2 + margin, Math.min(W - pw / 2 - margin, screenX));
-    let clampedY = Math.max(ph + margin + 12, Math.min(H - margin, screenY));
-
-    // ポップアップの元の位置がmap-wrap外 or 端に近すぎたら非表示にする
-    if (screenX < 0 || screenX > W || screenY < 0 || screenY > H) {
-      popup.classList.add('hidden');
-      popupVisible = false;
-      return;
-    }
-
-    popup.style.left = `${clampedX}px`;
-    popup.style.top  = `${clampedY}px`;
-  }
+  // ポップアップは下部固定のため位置計算不要
 
   // ===== ポップアップ =====
 
@@ -909,16 +882,6 @@
     avgBase?: number, avgPromo?: number,
     cityProps?: any
   ) {
-    const popup = document.getElementById('map-popup')!;
-    const wrap  = document.getElementById('map-wrap')!;
-    const rect  = wrap.getBoundingClientRect();
-
-    // クリック位置からSVG空間の座標を逆算して保存
-    const t = d3.zoomTransform(svg.node());
-    const clickX = event.clientX - rect.left;
-    const clickY = event.clientY - rect.top;
-    popupSvgX = (clickX - t.x) / t.k;
-    popupSvgY = (clickY - t.y) / t.k;
     popupVisible = true;
 
     // フィルター切替時の再描画用に地域情報を保存
@@ -928,12 +891,11 @@
 
     updatePopupContent(name, pref, avg, count, vehicles, avgBase, avgPromo);
 
-    popup.classList.remove('hidden');
-    // 初回表示時も境界クランプを適用
-    updatePopupPosition(t);
+    document.getElementById('map-popup')!.classList.remove('hidden');
     event.stopPropagation();
   }
-  document.getElementById('map-wrap')?.addEventListener('click', () => {
+  // ポップアップを閉じるヘルパー
+  function hidePopup() {
     document.getElementById('map-popup')?.classList.add('hidden');
     popupVisible = false;
     popupSvgX = null;
@@ -941,6 +903,13 @@
     popupCityName = '';
     popupPrefName = '';
     popupCityProps = null;
+  }
+  // マップ背景クリックで閉じる
+  document.getElementById('map-wrap')?.addEventListener('click', hidePopup);
+  // ✕ボタンで閉じる
+  document.getElementById('pp-close')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    hidePopup();
   });
 
   // ===== マップ色を再描画 =====
@@ -999,7 +968,8 @@
     const inactiveClass = 'bg-gray-100 text-gray-500 hover:bg-gray-200';
 
     document.querySelectorAll('.map-day-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation(); // map-wrapへのバブルアップを防止（ポップアップが閉じるのを防ぐ）
         filterDay = (btn as HTMLElement).dataset.day || 'all';
         document.querySelectorAll('.map-day-btn').forEach(b => {
           b.className = `map-day-btn text-[10px] px-1.5 py-0.5 rounded font-bold ${inactiveClass}`;
@@ -1010,7 +980,8 @@
     });
 
     document.querySelectorAll('.map-veh-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation(); // map-wrapへのバブルアップを防止（ポップアップが閉じるのを防ぐ）
         filterVehicle = (btn as HTMLElement).dataset.vehicle || 'all';
         document.querySelectorAll('.map-veh-btn').forEach(b => {
           b.className = `map-veh-btn text-[10px] px-1.5 py-0.5 rounded font-bold ${inactiveClass}`;
