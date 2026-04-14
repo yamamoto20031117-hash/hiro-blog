@@ -5,7 +5,6 @@ pubDate: 2024-12-15
 category: "Uber稼ぎ方"
 tags: ["UberEats", "名古屋", "原付", "大学生", "副業", "時給2000円"]
 featured: true
-heroImage: "/images/hero-nagoya-uber.svg"
 ---
 
 ## はじめに：いろんなバイトを経験した結果、Uberに行き着いた

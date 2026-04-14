@@ -16,6 +16,29 @@ const dateStr = pubDate.toLocaleDateString('ja-JP', {
   month: 'short',
   day: 'numeric',
 });
+
+// カテゴリごとのデザイン設定
+const categoryDesigns: Record<string, { gradient: string; emoji: string; accent: string }> = {
+  'クレカ修行': {
+    gradient: 'from-blue-800 via-blue-600 to-blue-500',
+    emoji: '💳',
+    accent: 'bg-amber-400 text-amber-900',
+  },
+  'Uber稼ぎ方': {
+    gradient: 'from-emerald-800 via-emerald-600 to-emerald-400',
+    emoji: '🛵',
+    accent: 'bg-emerald-400 text-emerald-900',
+  },
+  '扶養・税金': {
+    gradient: 'from-violet-800 via-violet-600 to-violet-400',
+    emoji: '🛡️',
+    accent: 'bg-violet-400 text-violet-900',
+  },
+};
+
+const design = category && categoryDesigns[category]
+  ? categoryDesigns[category]
+  : { gradient: 'from-gray-700 via-gray-600 to-gray-500', emoji: '📝', accent: 'bg-gray-400 text-gray-900' };
 ---
 
 <article class="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow overflow-hidden group">
@@ -30,15 +53,28 @@ const dateStr = pubDate.toLocaleDateString('ja-JP', {
           loading="lazy"
         />
       ) : (
-        <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary-100 to-primary-200">
-          <svg class="w-12 h-12 text-primary-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-              d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
-          </svg>
+        <div class={`w-full h-full bg-gradient-to-br ${design.gradient} flex items-center justify-content relative overflow-hidden group-hover:scale-105 transition-transform duration-300`}>
+          <!-- 装飾円 -->
+          <div class="absolute -right-8 -top-8 w-40 h-40 rounded-full bg-white opacity-5"></div>
+          <div class="absolute right-20 bottom-0 w-24 h-24 rounded-full bg-white opacity-5"></div>
+          <div class="absolute -left-6 -bottom-6 w-28 h-28 rounded-full bg-white opacity-5"></div>
+          <!-- 大きな絵文字 -->
+          <div class="absolute right-6 top-1/2 -translate-y-1/2 text-7xl opacity-20 select-none" aria-hidden="true">
+            {design.emoji}
+          </div>
+          <!-- カテゴリテキスト -->
+          <div class="relative z-10 p-6 flex flex-col justify-end h-full">
+            <span class={`inline-block self-start ${design.accent} text-xs font-bold px-3 py-1 rounded-full mb-2 shadow-sm`}>
+              {category || 'ブログ'}
+            </span>
+            <p class="text-white text-sm font-bold leading-snug line-clamp-2 drop-shadow-sm">
+              {title}
+            </p>
+          </div>
         </div>
       )}
 
-      {category && (
+      {heroImage && category && (
         <span class="absolute top-3 left-3 bg-primary-600 text-white text-xs font-semibold px-2.5 py-1 rounded-full shadow">
           {category}
         </span>

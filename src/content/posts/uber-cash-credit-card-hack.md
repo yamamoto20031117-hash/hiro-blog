@@ -5,7 +5,6 @@ pubDate: 2025-04-13
 category: "クレカ修行"
 tags: ["クレカ修行", "UberEats", "現金受け取り", "ポイント還元", "100万修行", "ゴールドカード", "三井住友"]
 featured: true
-heroImage: "/images/hero-credit-card.svg"
 affiliates:
   - name: "三井住友カード（NL）"
     description: "年会費永年無料・還元率0.5%。最短10秒でカード番号発行。Uber配達との相性が抜群。"
