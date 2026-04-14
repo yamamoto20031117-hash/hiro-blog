@@ -8,7 +8,7 @@ export default defineConfig({
     mdx(),
     sitemap(),
   ],
-  site: 'https://hiro-blog.vercel.app',
+  site: 'https://hiroblog.vercel.app',
   vite: {
     server: {
       watch: {
