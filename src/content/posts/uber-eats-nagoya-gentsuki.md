@@ -119,51 +119,51 @@ heroImage: "/images/hero-nagoya-uber.svg"
   <div style="background: #1f2937; color: white; padding: 10px 16px; font-size: 13px; font-weight: bold;">Uberアプリの実際の売上画面スクリーンショット</div>
   <div style="padding: 16px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
     <div style="text-align: center;">
-      <img src="/images/uber-earnings/week-1124-1201.png" alt="11/24-12/1の売上 ¥14,014" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
+      <img src="/images/uber-earnings/week-1124-1201.png" alt="11/24-12/1の売上 ¥14,014" loading="lazy" decoding="async" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
       <p style="font-size: 10px; color: #6b7280; margin: 4px 0 0 0;">11/24-12/1 ¥14,014</p>
     </div>
     <div style="text-align: center;">
-      <img src="/images/uber-earnings/week-1201-1208.png" alt="12/1-12/8の売上 ¥31,837" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
+      <img src="/images/uber-earnings/week-1201-1208.png" alt="12/1-12/8の売上 ¥31,837" loading="lazy" decoding="async" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
       <p style="font-size: 10px; color: #6b7280; margin: 4px 0 0 0;">12/1-12/8 ¥31,837</p>
     </div>
     <div style="text-align: center;">
-      <img src="/images/uber-earnings/week-1208-1215.png" alt="12/8-12/15の売上 ¥31,294" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
+      <img src="/images/uber-earnings/week-1208-1215.png" alt="12/8-12/15の売上 ¥31,294" loading="lazy" decoding="async" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
       <p style="font-size: 10px; color: #6b7280; margin: 4px 0 0 0;">12/8-12/15 ¥31,294</p>
     </div>
     <div style="text-align: center;">
-      <img src="/images/uber-earnings/week-1215-1222.png" alt="12/15-12/22の売上 ¥7,568" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
+      <img src="/images/uber-earnings/week-1215-1222.png" alt="12/15-12/22の売上 ¥7,568" loading="lazy" decoding="async" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
       <p style="font-size: 10px; color: #6b7280; margin: 4px 0 0 0;">12/15-12/22 ¥7,568</p>
     </div>
     <div style="text-align: center;">
-      <img src="/images/uber-earnings/week-1222-1229.png" alt="12/22-12/29の売上 ¥3,533" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
+      <img src="/images/uber-earnings/week-1222-1229.png" alt="12/22-12/29の売上 ¥3,533" loading="lazy" decoding="async" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
       <p style="font-size: 10px; color: #6b7280; margin: 4px 0 0 0;">12/22-12/29 ¥3,533</p>
     </div>
     <div style="text-align: center;">
-      <img src="/images/uber-earnings/week-0105-0112.png" alt="1/5-1/12の売上 ¥28,246" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
+      <img src="/images/uber-earnings/week-0105-0112.png" alt="1/5-1/12の売上 ¥28,246" loading="lazy" decoding="async" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
       <p style="font-size: 10px; color: #6b7280; margin: 4px 0 0 0;">1/5-1/12 ¥28,246</p>
     </div>
     <div style="text-align: center;">
-      <img src="/images/uber-earnings/week-0112-0119.png" alt="1/12-1/19の売上 ¥24,268" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
+      <img src="/images/uber-earnings/week-0112-0119.png" alt="1/12-1/19の売上 ¥24,268" loading="lazy" decoding="async" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
       <p style="font-size: 10px; color: #6b7280; margin: 4px 0 0 0;">1/12-1/19 ¥24,268</p>
     </div>
     <div style="text-align: center;">
-      <img src="/images/uber-earnings/week-0119-0126.png" alt="1/19-1/26の売上 ¥19,444" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
+      <img src="/images/uber-earnings/week-0119-0126.png" alt="1/19-1/26の売上 ¥19,444" loading="lazy" decoding="async" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
       <p style="font-size: 10px; color: #6b7280; margin: 4px 0 0 0;">1/19-1/26 ¥19,444</p>
     </div>
     <div style="text-align: center;">
-      <img src="/images/uber-earnings/week-0126-0202.png" alt="1/26-2/2の売上 ¥62,302" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
+      <img src="/images/uber-earnings/week-0126-0202.png" alt="1/26-2/2の売上 ¥62,302" loading="lazy" decoding="async" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
       <p style="font-size: 10px; color: #6b7280; margin: 4px 0 0 0;">1/26-2/2 ¥62,302</p>
     </div>
     <div style="text-align: center;">
-      <img src="/images/uber-earnings/week-0202-0209.png" alt="2/2-2/9の売上 ¥85,298" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
+      <img src="/images/uber-earnings/week-0202-0209.png" alt="2/2-2/9の売上 ¥85,298" loading="lazy" decoding="async" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
       <p style="font-size: 10px; color: #6b7280; margin: 4px 0 0 0;">2/2-2/9 ¥85,298</p>
     </div>
     <div style="text-align: center;">
-      <img src="/images/uber-earnings/week-0209-0216.png" alt="2/9-2/16の売上 ¥36,793" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
+      <img src="/images/uber-earnings/week-0209-0216.png" alt="2/9-2/16の売上 ¥36,793" loading="lazy" decoding="async" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
       <p style="font-size: 10px; color: #6b7280; margin: 4px 0 0 0;">2/9-2/16 ¥36,793</p>
     </div>
     <div style="text-align: center;">
-      <img src="/images/uber-earnings/week-0330-0406.png" alt="3/30-4/6の売上 ¥91,997" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
+      <img src="/images/uber-earnings/week-0330-0406.png" alt="3/30-4/6の売上 ¥91,997" loading="lazy" decoding="async" style="width: 100%; border-radius: 8px; border: 1px solid #e5e7eb;" />
       <p style="font-size: 10px; color: #6b7280; margin: 4px 0 0 0;">3/30-4/6 ¥91,997</p>
     </div>
   </div>
