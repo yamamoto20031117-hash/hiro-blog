@@ -1,0 +1,70 @@
+---
+// 徹底比較表コンポーネント（モバイルは横スクロール）
+export interface CompareItem {
+  name: string;
+  url: string;
+  price: string;
+  cells: string[];      // headers と同じ長さ・同じ順で埋める
+  badge?: string;       // 例: "編集部イチオシ"
+  rating?: number;      // 1〜5
+  highlight?: boolean;  // trueで行をハイライト（推し）
+}
+
+interface Props {
+  headers: string[];    // 比較軸のラベル（例: ["容量","保温保冷","背負い方"]）
+  items: CompareItem[];
+  ctaLabel?: string;
+}
+
+const { headers, items, ctaLabel = 'Amazonで見る' } = Astro.props;
+---
+
+<div class="overflow-x-auto -mx-4 sm:mx-0 pb-2">
+  <table class="min-w-[640px] w-full border-collapse text-sm">
+    <thead>
+      <tr class="bg-primary-600 text-white">
+        <th class="text-left font-semibold px-3 py-3 sticky left-0 bg-primary-600 z-10">商品</th>
+        {headers.map((h) => (
+          <th class="text-left font-semibold px-3 py-3 whitespace-nowrap">{h}</th>
+        ))}
+        <th class="text-left font-semibold px-3 py-3">価格</th>
+        <th class="px-3 py-3"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {items.map((it) => (
+        <tr class={`border-b border-gray-100 ${it.highlight ? 'bg-accent-500/10' : 'bg-white'}`}>
+          <th scope="row" class={`text-left align-top px-3 py-3 sticky left-0 z-10 ${it.highlight ? 'bg-[#fdf3e0]' : 'bg-white'}`}>
+            <div class="font-bold text-gray-900 leading-snug min-w-[150px]">{it.name}</div>
+            {it.badge && (
+              <span class="inline-block mt-1 bg-accent-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
+                {it.badge}
+              </span>
+            )}
+            {it.rating && (
+              <div class="text-xs text-yellow-500 mt-1">
+                {'★'.repeat(Math.round(it.rating))}<span class="text-gray-400">{'★'.repeat(5 - Math.round(it.rating))}</span>
+                <span class="text-gray-500 ml-1">{it.rating.toFixed(1)}</span>
+              </div>
+            )}
+          </th>
+          {it.cells.map((c) => (
+            <td class="align-top px-3 py-3 text-gray-700">{c}</td>
+          ))}
+          <td class="align-top px-3 py-3 font-bold text-primary-700 whitespace-nowrap">{it.price}</td>
+          <td class="align-top px-3 py-3">
+            <a
+              href={it.url}
+              target="_blank"
+              rel="sponsored noopener noreferrer nofollow"
+              class="inline-block bg-accent-500 hover:bg-accent-600 text-white text-xs font-semibold px-3 py-2 rounded-lg whitespace-nowrap transition-colors"
+            >
+              {ctaLabel}
+            </a>
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+<p class="text-[11px] text-gray-400 mt-2 px-4 sm:px-0">※価格・仕様は変動します。最新情報は各リンク先をご確認ください。</p>

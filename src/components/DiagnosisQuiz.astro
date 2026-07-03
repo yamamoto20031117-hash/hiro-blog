@@ -1,0 +1,157 @@
+---
+import AffiliateBox from '@/components/AffiliateBox.astro';
+
+// ===== 診断エンジン（データ駆動） =====
+// questions: 各選択肢が result.id ごとにスコアを加算する。合計最大の結果を表示。
+export interface QuizOption {
+  label: string;
+  scores: Record<string, number>; // { [resultId]: 加点 }
+}
+export interface QuizQuestion {
+  question: string;
+  options: QuizOption[];
+}
+export interface AffiliateProduct {
+  name: string;
+  description: string;
+  price: string;
+  url: string;
+  image?: string;
+  badge?: string;
+  rating?: number;
+}
+export interface QuizResult {
+  id: string;
+  title: string;   // 例: "がっつり本格装備タイプ"
+  lead: string;    // 結果の一言説明
+  products: AffiliateProduct[];
+}
+
+interface Props {
+  questions: QuizQuestion[];
+  results: QuizResult[];
+}
+const { questions, results } = Astro.props;
+const resultIds = results.map((r) => r.id);
+---
+
+<section
+  class="quiz-root bg-white rounded-2xl border border-gray-200 shadow-sm p-5 sm:p-7"
+  data-results={JSON.stringify(resultIds)}
+>
+  <!-- ===== 設問エリア ===== -->
+  <div class="quiz-questions">
+    <!-- 進捗バー -->
+    <div class="flex items-center justify-between mb-1 text-xs text-gray-500">
+      <span>かんたん{questions.length}問診断</span>
+      <span><span class="quiz-current">1</span> / {questions.length}</span>
+    </div>
+    <div class="h-2 w-full bg-gray-100 rounded-full overflow-hidden mb-6">
+      <div class="quiz-progress h-full bg-accent-500 transition-all duration-300" style={`width:${100 / questions.length}%`}></div>
+    </div>
+
+    {questions.map((q, qi) => (
+      <div class="quiz-q" data-qi={qi} hidden={qi !== 0}>
+        <h3 class="text-lg font-bold text-gray-900 mb-4 leading-snug">
+          <span class="text-accent-500">Q{qi + 1}.</span> {q.question}
+        </h3>
+        <div class="grid gap-3">
+          {q.options.map((opt) => (
+            <button
+              type="button"
+              class="quiz-opt text-left w-full px-4 py-3 rounded-xl border-2 border-gray-200 hover:border-accent-500 hover:bg-accent-500/5 font-medium text-gray-800 transition-colors"
+              data-scores={JSON.stringify(opt.scores)}
+            >
+              {opt.label}
+            </button>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <!-- ===== 結果エリア（初期非表示・中身はサーバー描画でSEO対応） ===== -->
+  <div class="quiz-results" hidden>
+    <p class="text-sm text-gray-500 mb-1">あなたにおすすめのタイプは…</p>
+    {results.map((r) => (
+      <div class="quiz-result" data-result-id={r.id} hidden>
+        <h3 class="text-2xl font-extrabold text-primary-700 mb-2">{r.title}</h3>
+        <p class="text-gray-700 mb-5 leading-relaxed">{r.lead}</p>
+        <div class="grid gap-4">
+          {r.products.map((p) => <AffiliateBox {...p} />)}
+        </div>
+      </div>
+    ))}
+    <button
+      type="button"
+      class="quiz-restart mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary-600 hover:text-primary-800"
+    >
+      ↻ もう一度診断する
+    </button>
+  </div>
+</section>
+
+<script>
+  function initQuiz(root: HTMLElement) {
+    const resultIds: string[] = JSON.parse(root.dataset.results || '[]');
+    const qArea = root.querySelector<HTMLElement>('.quiz-questions')!;
+    const rArea = root.querySelector<HTMLElement>('.quiz-results')!;
+    const questions = Array.from(root.querySelectorAll<HTMLElement>('.quiz-q'));
+    const progress = root.querySelector<HTMLElement>('.quiz-progress')!;
+    const currentLabel = root.querySelector<HTMLElement>('.quiz-current')!;
+    const total = questions.length;
+
+    let step = 0;
+    let scores: Record<string, number> = {};
+
+    const reset = () => {
+      step = 0;
+      scores = Object.fromEntries(resultIds.map((id) => [id, 0]));
+      questions.forEach((q, i) => (q.hidden = i !== 0));
+      root.querySelectorAll<HTMLElement>('.quiz-result').forEach((el) => (el.hidden = true));
+      rArea.hidden = true;
+      qArea.hidden = false;
+      progress.style.width = `${100 / total}%`;
+      currentLabel.textContent = '1';
+    };
+
+    const finish = () => {
+      let winner = resultIds[0];
+      let best = -Infinity;
+      for (const id of resultIds) {
+        if ((scores[id] ?? 0) > best) {
+          best = scores[id] ?? 0;
+          winner = id;
+        }
+      }
+      const panel = root.querySelector<HTMLElement>(`.quiz-result[data-result-id="${winner}"]`);
+      if (panel) panel.hidden = false;
+      qArea.hidden = true;
+      rArea.hidden = false;
+      root.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
+    root.querySelectorAll<HTMLButtonElement>('.quiz-opt').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const s: Record<string, number> = JSON.parse(btn.dataset.scores || '{}');
+        for (const [id, v] of Object.entries(s)) scores[id] = (scores[id] ?? 0) + v;
+
+        questions[step].hidden = true;
+        step += 1;
+        if (step >= total) {
+          finish();
+          return;
+        }
+        questions[step].hidden = false;
+        progress.style.width = `${(100 * (step + 1)) / total}%`;
+        currentLabel.textContent = String(step + 1);
+      });
+    });
+
+    root.querySelector<HTMLButtonElement>('.quiz-restart')?.addEventListener('click', reset);
+
+    reset();
+  }
+
+  document.querySelectorAll<HTMLElement>('.quiz-root').forEach(initQuiz);
+</script>
