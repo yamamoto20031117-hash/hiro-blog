@@ -22,6 +22,7 @@ const posts = defineCollection({
           image: z.string().optional(),
           badge: z.string().optional(),
           rating: z.number().min(0).max(5.0).optional(),
+          stat: z.string().optional(),
         })
       )
       .default([]),

@@ -1,0 +1,28 @@
+---
+// 診断ページへの送客バナー（記事末などに設置）
+interface Props {
+  href?: string;
+}
+const { href = '/shindan/uber-haitatsu' } = Astro.props;
+---
+
+<a
+  href={href}
+  class="block group no-underline rounded-2xl overflow-hidden border-2 border-accent-500 bg-gradient-to-br from-white to-accent-500/10 hover:to-accent-500/20 transition-colors shadow-sm"
+>
+  <div class="flex items-center gap-4 p-5">
+    <div class="flex-shrink-0 w-12 h-12 rounded-full bg-accent-500 text-white flex items-center justify-center text-2xl">
+      🎯
+    </div>
+    <div class="flex-1 min-w-0">
+      <p class="text-xs font-bold text-accent-600 mb-0.5">30秒・無料診断</p>
+      <p class="font-bold text-gray-900 leading-snug">あなたに必要な配達装備は？</p>
+      <p class="text-sm text-gray-600">4つの質問に答えるだけで、使用率データからおすすめグッズを提案</p>
+    </div>
+    <div class="flex-shrink-0 text-accent-500 group-hover:translate-x-1 transition-transform">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </div>
+  </div>
+</a>

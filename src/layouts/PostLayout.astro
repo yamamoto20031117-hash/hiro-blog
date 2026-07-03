@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import AffiliateBox from '@/components/AffiliateBox.astro';
+import DiagnosisCTA from '@/components/DiagnosisCTA.astro';
 import TableOfContents from '@/components/TableOfContents.astro';
 import PostMeta from '@/components/PostMeta.astro';
 
@@ -20,6 +21,7 @@ interface Props {
     image?: string;
     badge?: string;
     rating?: number;
+    stat?: string;
   }>;
 }
 
@@ -168,6 +170,11 @@ const breadcrumbJsonLd = {
       prose-blockquote:border-primary-400 prose-blockquote:bg-blue-50 prose-blockquote:py-1 prose-blockquote:rounded-r
       mb-10">
       <slot />
+    </div>
+
+    <!-- 診断ページへの送客 -->
+    <div class="mb-10">
+      <DiagnosisCTA />
     </div>
 
     <!-- アフィリエイト商品 -->
