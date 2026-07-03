@@ -5,6 +5,18 @@ pubDate: 2025-04-13
 category: "扶養・税金"
 tags: ["Uber Eats 確定申告", "確定申告 やり方", "大学生 確定申告", "UberEats 税金", "家内労働者の特例", "雑所得", "副業 確定申告", "バイト 掛け持ち 確定申告"]
 heroImage: "/images/hero-kakuteishinkoku.svg"
+affiliates:
+  - name: "副業・フリーランスの確定申告 やり方本（Amazon）"
+    description: "初めての確定申告を手順どおりに進められる実務本。毎年の税制改正に対応した最新年度版から選べます。"
+    price: "¥1,500前後"
+    url: "https://www.amazon.co.jp/s?k=%E7%A2%BA%E5%AE%9A%E7%94%B3%E5%91%8A%20%E5%89%AF%E6%A5%AD%20%E3%83%95%E3%83%AA%E3%83%BC%E3%83%A9%E3%83%B3%E3%82%B9%20%E3%82%84%E3%82%8A%E6%96%B9%20%E6%9C%AC&i=stripbooks&tag=hiroakilifeha-22"
+    badge: "初めてでも安心"
+    rating: 4.3
+  - name: "【改訂版】本当の自由を手に入れる お金の大学"
+    description: "確定申告のあとに読みたい、稼いだお金を守る・増やすの全体像。副業収入の管理に効く定番の1冊。"
+    price: "¥1,540"
+    url: "https://www.amazon.co.jp/dp/4023323780/?tag=hiroakilifeha-22"
+    rating: 4.6
 ---
 
 <!-- 記事のゴール -->

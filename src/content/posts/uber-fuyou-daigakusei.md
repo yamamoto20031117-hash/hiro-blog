@@ -5,6 +5,18 @@ pubDate: 2025-04-13
 category: "扶養・税金"
 tags: ["Uber Eats 扶養", "大学生 扶養", "130万の壁", "大学生 バイト 税金", "UberEats", "家内労働者の特例", "確定申告", "副業 扶養", "社会保険", "特定親族特別控除"]
 heroImage: "/images/hero-fuyou-tax.svg"
+affiliates:
+  - name: "【改訂版】本当の自由を手に入れる お金の大学"
+    description: "扶養・税金・社会保険の全体像を大学生でもゼロから掴める定番のベストセラー。新NISAや固定費見直しまで網羅。"
+    price: "¥1,540"
+    url: "https://www.amazon.co.jp/dp/4023323780/?tag=hiroakilifeha-22"
+    badge: "累計140万部"
+    rating: 4.6
+  - name: "大学生・副業のための税金の本（Amazon）"
+    description: "130万の壁や扶養控除でつまずかないための入門書。最新の税制に対応した年度版から選べます。"
+    price: "¥1,400前後"
+    url: "https://www.amazon.co.jp/s?k=%E5%A4%A7%E5%AD%A6%E7%94%9F%20%E3%81%8A%E9%87%91%20%E7%A8%8E%E9%87%91%20%E6%89%B6%E9%A4%8A%20%E6%9C%AC&i=stripbooks&tag=hiroakilifeha-22"
+    rating: 4.2
 ---
 
 <!-- 結論カード -->

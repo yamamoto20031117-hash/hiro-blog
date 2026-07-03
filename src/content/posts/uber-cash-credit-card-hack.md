@@ -13,6 +13,11 @@ affiliates:
     url: "https://example.com/smbc-nl"
     badge: "Uber配達員に最適"
     rating: 4.8
+  - name: "ポイ活・クレカ節約の入門本（Amazon）"
+    description: "クレカ修行と合わせて読みたい、ポイントを最大化する固定費の見直し・節約術。仕組みで貯める人になる1冊。"
+    price: "¥1,400前後"
+    url: "https://www.amazon.co.jp/s?k=%E3%83%9D%E3%82%A4%E6%B4%BB%20%E3%82%AF%E3%83%AC%E3%82%B8%E3%83%83%E3%83%88%E3%82%AB%E3%83%BC%E3%83%89%20%E7%AF%80%E7%B4%84%20%E6%9C%AC&i=stripbooks&tag=hiroakilifeha-22"
+    rating: 4.3
 ---
 
 <!-- 結論カード -->
