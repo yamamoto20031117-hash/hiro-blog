@@ -2,7 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import DiagnosisQuiz from '@/components/DiagnosisQuiz.astro';
 import ComparisonTable from '@/components/ComparisonTable.astro';
-import { amazonSearch } from '@/consts';
+import { amazonSearch, amazonUrl } from '@/consts';
 
 // ★リンクの差し替え方★
 //   暫定リンクは amazonSearch('キーワード')（=検索結果に飛ぶ）。
@@ -51,9 +51,9 @@ const results = [
     title: 'これから始める人の必需品タイプ',
     lead: 'まずはこの3つ。配達員の85%以上が使うスマホホルダーとモバイルバッテリーから揃えれば、初日から失敗しません。',
     products: [
-      { name: 'スマホホルダー（自転車・バイク兼用）', description: '配達員使用率No.1。リクエストとナビをスマホを出さずに確認でき、効率が段違いに。', price: '¥1,480〜', url: amazonSearch('自転車 スマホホルダー 防振'), badge: '最初の1つ', rating: 4.5 },
-      { name: 'モバイルバッテリー 10000mAh', description: 'ナビ＋アプリで電池は一気に減る。1日稼働なら10000mAhが目安。', price: '¥2,280〜', url: amazonSearch('モバイルバッテリー 10000mAh 軽量'), rating: 4.4 },
-      { name: '保温保冷デリバリーバッグ（標準サイズ）', description: 'まずは標準サイズで十分。保温保冷でクレーム（冷め・崩れ）を防ぐ。', price: '¥3,180〜', url: amazonSearch('デリバリーバッグ 保温 保冷'), rating: 4.3 },
+      { name: 'スマホホルダー（自転車・バイク兼用）', description: 'リクエストとナビをスマホを出さずに確認でき、効率が段違いに。まず最初に買うべき1つ。', price: '¥1,480〜', url: amazonSearch('自転車 バイク スマホホルダー 防水 防振'), badge: '最初の1つ', rating: 4.5, stat: '配達員の使用率85.7%（No.1）' },
+      { name: 'Anker PowerCore 10000（モバイルバッテリー）', description: 'ナビ＋アプリで電池は一気に減る。Amazon定番ベストセラーの軽量10000mAh。1日稼働の必需品。', price: '¥3,990〜', url: amazonUrl('B019GNUT0C'), rating: 4.5, stat: '配達員の77.4%が携帯' },
+      { name: '保温保冷デリバリーバッグ（標準サイズ）', description: 'まずは標準サイズで十分。保温保冷でクレーム（冷め・崩れ）を防ぐ。', price: '¥3,180〜', url: amazonSearch('デリバリーバッグ 保温 保冷 出前'), rating: 4.3 },
     ],
   },
   {
@@ -81,7 +81,7 @@ const results = [
     title: '疲れにくさ・料理保護重視タイプ',
     lead: '長く続けるカギは「疲れない」「こぼさない」。体と料理を守る装備で、安定して稼ぎ続けられます。',
     products: [
-      { name: 'デリバリーバッグ用 緩衝インナー', description: '配達員の6割が使う緩衝材。段差の衝撃から料理を守り、崩れ・こぼれを防ぐ。', price: '¥1,780〜', url: amazonSearch('デリバリーバッグ 緩衝材 仕切り'), badge: '崩れ防止に', rating: 4.4 },
+      { name: 'デリバリーバッグ用 緩衝インナー', description: '段差の衝撃から料理を守り、崩れ・こぼれを防ぐ。低評価の最大原因をつぶす1品。', price: '¥1,780〜', url: amazonSearch('デリバリーバッグ 緩衝材 仕切り インナー'), badge: '崩れ防止に', rating: 4.4, stat: '配達員の60.7%が使用' },
       { name: '保冷インナーバッグ', description: '夏場のドリンク・アイス・生ものの温度をキープ。低評価の原因を1つ消す。', price: '¥1,980〜', url: amazonSearch('保冷バッグ インナー 大容量'), rating: 4.3 },
       { name: '低反発サドルカバー / クッション', description: '長時間の自転車稼働のお尻・腰の負担を軽減。地味だが効く1品。', price: '¥1,280〜', url: amazonSearch('自転車 サドルカバー 低反発'), rating: 4.1 },
     ],
