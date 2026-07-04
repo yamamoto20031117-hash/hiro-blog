@@ -8,6 +8,7 @@ featured: true
 heroImage: "/images/hero-nagoya-uber.svg"
 affiliates:
   - name: "カエディア KDR-M11C 防振スマホホルダー"
+    icon: "📱"
     description: "原付の振動でカメラ・ナビが乱れるのを防ぐ防振タイプ。時給2000円を安定させる土台。配達員使用率No.1アイテム。"
     price: "¥2,680〜"
     url: "https://www.amazon.co.jp/dp/B083SP2KX8/?tag=hiroakilifeha-22"
@@ -15,12 +16,14 @@ affiliates:
     badge: "原付なら必須"
     stat: "スマホホルダーは配達員の85.7%が使用"
   - name: "Anker PowerCore 10000（モバイルバッテリー）"
+    icon: "🔋"
     description: "ナビ＋アプリで電池は一気に減る。Amazon定番ベストセラーの軽量10000mAh。1日稼働の必需品。"
     price: "¥3,990〜"
     url: "https://www.amazon.co.jp/dp/B019GNUT0C/?tag=hiroakilifeha-22"
     rating: 4.5
     stat: "配達員の77.4%が携帯"
   - name: "デリバリーバッグ 35L（保温保冷・大容量）"
+    icon: "🎒"
     description: "出前館の推奨サイズ35L以上をクリア。保温保冷で料理の崩れ・冷めを防ぎ、低評価を回避。"
     price: "¥3,480〜"
     url: "https://www.amazon.co.jp/dp/B0C89QKV2R/?tag=hiroakilifeha-22"

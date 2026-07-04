@@ -1,0 +1,29 @@
+---
+import { COLOR_MAP } from '@/site';
+
+// 汎用サムネ。image があれば画像、無ければカテゴリ色グラデ＋絵文字の「見栄えするタイル」。
+interface Props {
+  image?: string;
+  emoji?: string;
+  color?: string;   // blue|green|orange|teal|purple（COLOR_MAPのキー）
+  label?: string;
+  alt?: string;
+  class?: string;   // サイズは呼び出し側で指定（例: "w-full h-full"）
+}
+const { image, emoji = '🛒', color = 'blue', label, alt = '', class: cls = '' } = Astro.props;
+const grad = COLOR_MAP[color]?.hero ?? 'from-primary-600 to-primary-900';
+---
+
+{image ? (
+  <img src={image} alt={alt} class={`object-cover ${cls}`} loading="lazy" />
+) : (
+  <div class={`relative flex items-center justify-center bg-gradient-to-br ${grad} overflow-hidden ${cls}`}>
+    <!-- 背景の光沢＋ゴースト絵文字で"意図した装飾"に見せる -->
+    <div class="absolute inset-0" style="background:radial-gradient(circle at 28% 22%, rgba(255,255,255,.28), transparent 46%)"></div>
+    <span class="absolute -right-3 -bottom-4 opacity-10 select-none leading-none" style="font-size:7rem">{emoji}</span>
+    <span class="relative text-white drop-shadow-sm select-none leading-none" style="font-size:clamp(2.2rem,7vw,3.4rem)">{emoji}</span>
+    {label && (
+      <span class="absolute bottom-2 left-3 text-white/90 text-[11px] font-bold tracking-wide">{label}</span>
+    )}
+  </div>
+)}

@@ -1,16 +1,19 @@
 ---
+import Thumb from '@/components/Thumb.astro';
+
 interface Props {
   name: string;
   description: string;
   price: string;
   url: string;
   image?: string;
+  icon?: string;    // 画像が無い時の絵文字（例: 🎧🔋）
   badge?: string;   // 例: "人気No.1" / "期間限定" など
   rating?: number;  // 1〜5
   stat?: string;    // 社会的証明チップ 例: "配達員の85.7%が使用"
 }
 
-const { name, description, price, url, image, badge, rating, stat } = Astro.props;
+const { name, description, price, url, image, icon, badge, rating, stat } = Astro.props;
 
 const stars = rating ? Math.round(Math.min(5, Math.max(0, rating))) : null;
 ---
@@ -25,19 +28,10 @@ const stars = rating ? Math.round(Math.min(5, Math.max(0, rating))) : null;
   )}
 
   <div class="flex gap-4 items-start">
-    <!-- 商品画像 -->
-    {image ? (
-      <div class="flex-shrink-0 w-24 h-24 sm:w-28 sm:h-28 rounded-lg overflow-hidden bg-gray-100 shadow">
-        <img src={image} alt={name} class="w-full h-full object-cover" loading="lazy" />
-      </div>
-    ) : (
-      <div class="flex-shrink-0 w-24 h-24 sm:w-28 sm:h-28 rounded-lg bg-gradient-to-br from-primary-100 to-primary-200 flex items-center justify-center">
-        <svg class="w-12 h-12 text-primary-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
-            d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/>
-        </svg>
-      </div>
-    )}
+    <!-- 商品画像/絵文字タイル -->
+    <div class="flex-shrink-0 w-24 h-24 sm:w-28 sm:h-28 rounded-xl overflow-hidden shadow">
+      <Thumb image={image} emoji={icon ?? '🛒'} color="blue" alt={name} class="w-full h-full" />
+    </div>
 
     <!-- 商品情報 -->
     <div class="flex-1 min-w-0">

@@ -20,6 +20,7 @@ const posts = defineCollection({
           price: z.string(),
           url: z.string(),
           image: z.string().optional(),
+          icon: z.string().optional(),
           badge: z.string().optional(),
           rating: z.number().min(0).max(5.0).optional(),
           stat: z.string().optional(),

@@ -1,5 +1,6 @@
 ---
 import { amazonUrl, amazonSearch } from '@/consts';
+import Thumb from '@/components/Thumb.astro';
 
 // ランキング表示部品。item は asin（→直リンク）か url（→検索等）どちらかを指定。
 export interface RankItem {
@@ -9,6 +10,7 @@ export interface RankItem {
   pros?: string[];        // 箇条書きの強み
   rating?: number;        // 1〜5
   image?: string;
+  icon?: string;          // 画像が無い時に出す絵文字（例: 🎧🔋）
   badge?: string;
   asin?: string;          // あれば amazonUrl(asin) で直リンク
   url?: string;           // asinが無い場合の遷移先（amazonSearch等）
@@ -21,6 +23,7 @@ interface Props {
 const { items } = Astro.props;
 
 const medal = (i: number) => (i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '');
+const tileColors = ['blue', 'green', 'purple', 'teal', 'orange'];
 const linkOf = (it: RankItem) =>
   it.asin ? amazonUrl(it.asin) : it.url ? it.url : amazonSearch(it.searchKeyword ?? it.name);
 ---
@@ -37,12 +40,10 @@ const linkOf = (it: RankItem) =>
           </span>
         </div>
 
-        <!-- 画像 -->
-        {it.image && (
-          <div class="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-lg overflow-hidden bg-gray-100">
-            <img src={it.image} alt={it.name} class="w-full h-full object-cover" loading="lazy" />
-          </div>
-        )}
+        <!-- 画像/絵文字タイル -->
+        <div class="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shadow-sm">
+          <Thumb image={it.image} emoji={it.icon ?? '🛒'} color={tileColors[i % tileColors.length]} alt={it.name} class="w-full h-full" />
+        </div>
 
         <!-- 本体 -->
         <div class="flex-1 min-w-0">
