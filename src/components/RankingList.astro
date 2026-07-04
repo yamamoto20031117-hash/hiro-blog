@@ -15,6 +15,7 @@ export interface RankItem {
   asin?: string;          // あれば amazonUrl(asin) で直リンク
   url?: string;           // asinが無い場合の遷移先（amazonSearch等）
   searchKeyword?: string; // url も asin も無い時のフォールバック検索語
+  productSlug?: string;   // /products/[slug] の詳細レビューがある場合
 }
 
 interface Props {
@@ -73,17 +74,24 @@ const linkOf = (it: RankItem) =>
 
           <div class="flex items-center justify-between gap-2 flex-wrap mt-3">
             <span class="text-primary-700 font-bold text-base">{it.price}</span>
-            <a
-              href={linkOf(it)}
-              target="_blank"
-              rel="sponsored noopener noreferrer nofollow"
-              class="inline-flex items-center gap-1.5 bg-accent-500 hover:bg-accent-600 text-white text-sm font-bold px-4 py-2 rounded-lg transition-colors shadow-sm"
-            >
-              Amazonで見る
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
-              </svg>
-            </a>
+            <div class="flex items-center gap-2">
+              {it.productSlug && (
+                <a href={`/products/${it.productSlug}`} class="inline-flex items-center gap-1 text-primary-600 hover:text-primary-800 text-xs font-semibold">
+                  詳しくレビュー
+                </a>
+              )}
+              <a
+                href={linkOf(it)}
+                target="_blank"
+                rel="sponsored noopener noreferrer nofollow"
+                class="inline-flex items-center gap-1.5 bg-accent-500 hover:bg-accent-600 text-white text-sm font-bold px-4 py-2 rounded-lg transition-colors shadow-sm"
+              >
+                Amazonで見る
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                </svg>
+              </a>
+            </div>
           </div>
         </div>
       </div>

@@ -1,0 +1,45 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Thumb from '@/components/Thumb.astro';
+import { PRODUCTS } from '@/data/products';
+import { getCategoryByLabel, SITE_NAME } from '@/site';
+---
+
+<BaseLayout
+  title={`商品レビュー一覧｜${SITE_NAME}`}
+  description="編集部が実用目線で徹底レビューした商品の一覧。特徴・スペック・メリット/デメリット・こんな人におすすめかまで、購入前に知りたいことをまとめています。"
+>
+  <section class="bg-gradient-to-br from-primary-700 to-primary-900 text-white py-12 px-4">
+    <div class="max-w-3xl mx-auto text-center">
+      <div class="text-4xl mb-3">📝</div>
+      <h1 class="text-2xl sm:text-3xl font-bold mb-2">商品レビュー一覧</h1>
+      <p class="text-sm sm:text-base opacity-90 max-w-xl mx-auto">
+        購入前に知りたいことを、実用目線で徹底解説。気になる商品を深掘りチェック。
+      </p>
+    </div>
+  </section>
+
+  <div class="max-w-4xl mx-auto px-4 py-10">
+    <div class="grid sm:grid-cols-2 gap-5">
+      {PRODUCTS.map((p) => {
+        const cat = getCategoryByLabel(p.category);
+        return (
+          <a href={`/products/${p.slug}`} class="flex bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden group">
+            <div class="w-28 flex-shrink-0">
+              <Thumb emoji={p.emoji} color={cat?.color ?? 'blue'} class="w-full h-full min-h-[7rem]" />
+            </div>
+            <div class="p-4 min-w-0 flex flex-col">
+              {cat && <span class="text-[11px] font-bold text-gray-400 mb-1">{cat.icon} {cat.label}</span>}
+              <h2 class="font-bold text-gray-900 text-sm leading-snug group-hover:text-primary-600 transition-colors line-clamp-2">{p.name}</h2>
+              <p class="text-xs text-accent-600 font-semibold mt-1 line-clamp-2">{p.tagline}</p>
+              <div class="mt-auto pt-2 flex items-center justify-between">
+                <span class="text-yellow-400 text-xs">{'★'.repeat(Math.round(p.rating))}<span class="text-gray-500 ml-1">{p.rating.toFixed(1)}</span></span>
+                <span class="text-sm font-bold text-primary-700">{p.price}</span>
+              </div>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+  </div>
+</BaseLayout>
