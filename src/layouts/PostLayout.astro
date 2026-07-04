@@ -3,7 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import AffiliateBox from '@/components/AffiliateBox.astro';
 import DiagnosisCTA from '@/components/DiagnosisCTA.astro';
 import Thumb from '@/components/Thumb.astro';
-import { getCategoryByLabel } from '@/site';
+import { getCategoryByLabel, SITE_NAME } from '@/site';
 import TableOfContents from '@/components/TableOfContents.astro';
 import PostMeta from '@/components/PostMeta.astro';
 
@@ -40,19 +40,10 @@ const {
 } = Astro.props;
 
 // カテゴリ名 → URLスラッグ変換
-const categorySlugMap: Record<string, string> = {
-  'Uber稼ぎ方': 'uber',
-  'クレカ修行': 'credit-card',
-  '扶養・税金': 'tax',
-};
-const categorySlug = category ? (categorySlugMap[category] ?? category.toLowerCase()) : null;
+const categorySlug = category ? (getCategoryByLabel(category)?.slug ?? category.toLowerCase()) : null;
 
 // SEO用キーワード生成
-const seoKeywords = [
-  ...tags,
-  category,
-  'Uber Eats', '大学生', 'バイト', '副業', '時給'
-].filter(Boolean).join(',');
+const seoKeywords = [...tags, category, 'おすすめ', 'ランキング', '比較'].filter(Boolean).join(',');
 
 // 日付フォーマット
 const publishedISO = pubDate.toISOString();
@@ -68,13 +59,13 @@ const articleJsonLd = {
   "datePublished": publishedISO,
   "dateModified": modifiedISO,
   "author": {
-    "@type": "Person",
-    "name": "ひろ",
+    "@type": "Organization",
+    "name": SITE_NAME,
     "url": new URL('/about', Astro.site).toString()
   },
   "publisher": {
     "@type": "Organization",
-    "name": "ひろブログ",
+    "name": SITE_NAME,
     "logo": {
       "@type": "ImageObject",
       "url": new URL('/favicon.svg', Astro.site).toString()

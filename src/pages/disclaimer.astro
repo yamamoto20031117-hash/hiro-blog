@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import { SITE_NAME } from '@/site';
 ---
 
 <BaseLayout title="免責事項" description="MyAffiliateBlogの免責事項ページです。">
@@ -14,7 +15,7 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 
       <h2>アフィリエイトリンクについて</h2>
       <p>
-        ひろブログは、Amazon.co.jpを宣伝しリンクすることによってサイトが紹介料を獲得できる手段を提供することを目的に設定された
+        {SITE_NAME}は、Amazon.co.jpを宣伝しリンクすることによってサイトが紹介料を獲得できる手段を提供することを目的に設定された
         アフィリエイトプログラムである、Amazonアソシエイト・プログラムの参加者です。
       </p>
       <p>

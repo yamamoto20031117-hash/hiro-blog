@@ -1,11 +1,11 @@
 {
-  "name": "全国Uber Eats時給マップ - ひろブログ",
-  "short_name": "時給マップ",
-  "description": "配達員のリアルなデータで作る全国Uber Eats時給マップ。都道府県・市区町村別の時給を地図で確認。",
-  "start_url": "/data",
+  "name": "売れ筋ナビ - 診断とランキングで選ぶ買い物ガイド",
+  "short_name": "売れ筋ナビ",
+  "description": "ガジェット・家電・生活雑貨から節約・副業まで、いま売れている商品を診断・ランキング・徹底比較で紹介する買い物ガイド。",
+  "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#16a34a",
+  "theme_color": "#4f46e5",
   "orientation": "portrait",
   "scope": "/",
   "icons": [
@@ -22,7 +22,7 @@
       "purpose": "any maskable"
     }
   ],
-  "categories": ["lifestyle", "finance"],
+  "categories": ["shopping", "lifestyle"],
   "lang": "ja",
   "dir": "ltr"
 }
