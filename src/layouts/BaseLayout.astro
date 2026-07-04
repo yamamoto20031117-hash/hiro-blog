@@ -1,6 +1,7 @@
 ---
 import Header from '@/components/Header.astro';
 import Footer from '@/components/Footer.astro';
+import { SITE_NAME, SITE_DESCRIPTION, SITE_KEYWORDS } from '@/site';
 
 interface Props {
   title: string;
@@ -15,9 +16,9 @@ interface Props {
 
 const {
   title,
-  description = '大学生がUber Eatsの原付配達で時給2000円を稼ぐ方法、クレジットカード活用術、扶養控除・確定申告の知識を実体験から発信。名古屋の大学院生によるリアルな副業・節約ブログ。',
+  description = SITE_DESCRIPTION,
   ogImage = '/og-default.png',
-  keywords = 'Uber Eats,時給,大学生,バイト,副業,原付,配達,稼ぐ,名古屋,クレジットカード,扶養,確定申告,節約',
+  keywords = SITE_KEYWORDS,
   type = 'website',
   publishedTime,
   modifiedTime,
@@ -26,7 +27,7 @@ const {
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const ogImageURL = new URL(ogImage, Astro.site).toString();
-const siteName = 'ひろブログ';
+const siteName = SITE_NAME;
 ---
 
 <!doctype html>
@@ -39,7 +40,7 @@ const siteName = 'ひろブログ';
     <title>{title} | {siteName}</title>
     <meta name="description" content={description} />
     <meta name="keywords" content={keywords} />
-    <meta name="author" content="ひろ" />
+    <meta name="author" content={siteName} />
     {noindex && <meta name="robots" content="noindex,nofollow" />}
 
     <!-- OGP (Open Graph Protocol) -->
@@ -69,7 +70,7 @@ const siteName = 'ひろブログ';
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="時給マップ" />
+    <meta name="apple-mobile-web-app-title" content={siteName} />
 
     <!-- JSON-LD: WebSite (トップページ用サイト構造化データ) -->
     <script type="application/ld+json" set:html={JSON.stringify({
@@ -77,12 +78,7 @@ const siteName = 'ひろブログ';
       "@type": "WebSite",
       "name": siteName,
       "url": Astro.site?.toString(),
-      "description": "大学生がUber Eatsの原付配達で時給2000円を稼ぐ方法を実体験から発信するブログ",
-      "author": {
-        "@type": "Person",
-        "name": "ひろ",
-        "description": "名古屋大学大学院 理学研究科在籍。原付でUber Eats配達をしながら副業・節約・クレカ活用の情報を発信中。"
-      },
+      "description": SITE_DESCRIPTION,
       "inLanguage": "ja"
     })} />
 

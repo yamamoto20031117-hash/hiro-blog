@@ -1,0 +1,73 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ArticleCard from '@/components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+import { SITE_NAME, CATEGORIES, COLOR_MAP } from '@/site';
+
+// 「ランキング」タグを持つ記事をランキング記事として集約
+const allPosts = (await getCollection('posts'))
+  .filter(p => !p.data.draft)
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const rankingPosts = allPosts.filter(p => p.data.tags?.some(t => t.includes('ランキング')));
+---
+
+<BaseLayout
+  title="売れ筋ランキング｜今買うべき人気商品を徹底比較"
+  description={`${SITE_NAME}の売れ筋ランキング。ジャンル別に、いま売れている人気商品を徹底比較して紹介します。`}
+>
+  <section class="bg-gradient-to-br from-accent-500 to-accent-600 text-white py-12 px-4">
+    <div class="max-w-3xl mx-auto text-center">
+      <div class="text-4xl mb-3">🔥</div>
+      <h1 class="text-2xl sm:text-3xl font-bold mb-2">売れ筋ランキング</h1>
+      <p class="text-sm sm:text-base opacity-90 max-w-xl mx-auto">
+        ジャンル別に、いま売れている人気商品を徹底比較。あなたの「買い」がすぐ見つかります。
+      </p>
+    </div>
+  </section>
+
+  <div class="max-w-5xl mx-auto px-4 py-10 space-y-12">
+
+    <!-- ジャンルから探す -->
+    <section>
+      <h2 class="text-lg font-bold text-gray-900 mb-4">ジャンルから探す</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        {CATEGORIES.slice(0, 4).map(cat => {
+          const c = COLOR_MAP[cat.color] ?? COLOR_MAP['blue'];
+          return (
+            <a href={`/category/${cat.slug}`}
+              class={`flex flex-col items-center gap-1 ${c.bg} ${c.text} border ${c.border} px-2 py-4 rounded-2xl font-semibold text-sm text-center hover:shadow-sm transition-shadow`}>
+              <span class="text-2xl">{cat.icon}</span>
+              {cat.label}
+            </a>
+          );
+        })}
+      </div>
+    </section>
+
+    <!-- ランキング記事 -->
+    <section>
+      <h2 class="text-lg font-bold text-gray-900 mb-4">ランキング記事</h2>
+      {rankingPosts.length > 0 ? (
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {rankingPosts.map(post => (
+            <ArticleCard
+              title={post.data.title}
+              description={post.data.description ?? ''}
+              pubDate={post.data.pubDate}
+              slug={post.slug}
+              heroImage={post.data.heroImage}
+              category={post.data.category}
+              tags={post.data.tags}
+            />
+          ))}
+        </div>
+      ) : (
+        <div class="rounded-2xl border border-gray-200 bg-white py-14 text-center text-gray-400">
+          <div class="text-4xl mb-3">🛠️</div>
+          <p class="text-sm">売れ筋ランキングを準備中です。まずは上のジャンルから探せます。</p>
+        </div>
+      )}
+    </section>
+
+  </div>
+</BaseLayout>

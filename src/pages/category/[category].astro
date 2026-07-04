@@ -2,39 +2,25 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ArticleCard from '@/components/ArticleCard.astro';
 import { getCollection } from 'astro:content';
+import { CATEGORIES, COLOR_MAP } from '@/site';
 
 export async function getStaticPaths() {
-  const categoryMap: Record<string, { label: string; slug: string; icon: string; color: string; desc: string }> = {
-    'uber':         { label: 'Uber稼ぎ方',  slug: 'uber',         icon: '🚗', color: 'green',  desc: 'Uber Eatsの配達効率・インセンティブ活用・副業としての稼ぎ方を徹底解説。' },
-    'credit-card':  { label: 'クレカ修行',   slug: 'credit-card',  icon: '💳', color: 'blue',   desc: 'クレジットカードのポイント・マイルを最大効率で貯める方法をご紹介。' },
-    'tax':          { label: '扶養・税金',   slug: 'tax',          icon: '📊', color: 'orange', desc: '副業収入と扶養・確定申告の関係をわかりやすく解説します。' },
-  };
-
   const allPosts = await getCollection('posts');
 
-  return Object.entries(categoryMap).map(([slug, meta]) => {
+  return CATEGORIES.map((meta) => {
     const posts = allPosts
-      .filter(p => {
-        const cat = p.data.category ?? '';
-        return cat === meta.label;
-      })
+      .filter(p => (p.data.category ?? '') === meta.label)
       .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 
     return {
-      params: { category: slug },
+      params: { category: meta.slug },
       props: { meta, posts },
     };
   });
 }
 
 const { meta, posts } = Astro.props;
-
-const colorMap: Record<string, { hero: string; badge: string; badgeText: string }> = {
-  green:  { hero: 'from-green-600 to-green-800',   badge: 'bg-green-100',  badgeText: 'text-green-700' },
-  blue:   { hero: 'from-blue-600 to-blue-800',     badge: 'bg-blue-100',   badgeText: 'text-blue-700' },
-  orange: { hero: 'from-orange-500 to-orange-700', badge: 'bg-orange-100', badgeText: 'text-orange-700' },
-};
-const colors = colorMap[meta.color] ?? colorMap['blue'];
+const colors = COLOR_MAP[meta.color] ?? COLOR_MAP['blue'];
 ---
 
 <BaseLayout title={`${meta.label}の記事一覧`} description={meta.desc}>

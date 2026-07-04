@@ -1,0 +1,37 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { SITE_NAME, DIAGNOSES } from '@/site';
+---
+
+<BaseLayout
+  title="診断で選ぶ｜あなたに最適な1つが見つかる無料診断"
+  description={`${SITE_NAME}の無料診断まとめ。いくつかの質問に答えるだけで、あなたに最適な商品・装備を提案します。`}
+>
+  <section class="bg-gradient-to-br from-accent-500 to-accent-600 text-white py-12 px-4">
+    <div class="max-w-3xl mx-auto text-center">
+      <div class="text-4xl mb-3">🎯</div>
+      <h1 class="text-2xl sm:text-3xl font-bold mb-2">診断で選ぶ</h1>
+      <p class="text-sm sm:text-base opacity-90 max-w-xl mx-auto">
+        いくつかの質問に答えるだけで、あなたに最適な「買い」が見つかる無料診断。
+      </p>
+    </div>
+  </section>
+
+  <div class="max-w-3xl mx-auto px-4 py-10">
+    <div class="grid sm:grid-cols-2 gap-4">
+      {DIAGNOSES.map(d => (
+        <a href={d.href} class="block bg-white rounded-2xl border-2 border-accent-500/30 hover:border-accent-500 p-5 transition-colors group">
+          <div class="flex items-center gap-3">
+            <span class="text-3xl flex-shrink-0">{d.icon}</span>
+            <div>
+              <span class="text-[11px] font-bold text-accent-600">{d.tag}</span>
+              <h2 class="font-bold text-gray-900 leading-snug group-hover:text-accent-600 transition-colors">{d.title}</h2>
+              <p class="text-xs text-gray-500 mt-0.5">{d.desc}</p>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+    <p class="text-center text-sm text-gray-400 mt-8">診断は続々追加予定です。</p>
+  </div>
+</BaseLayout>
