@@ -3,6 +3,7 @@ import BaseLayout from './BaseLayout.astro';
 import AffiliateBox from '@/components/AffiliateBox.astro';
 import Thumb from '@/components/Thumb.astro';
 import AdDisclosure from '@/components/AdDisclosure.astro';
+import KeyPointsBox from '@/components/KeyPointsBox.astro';
 import { getCategoryByLabel, SITE_NAME, SITE_AUTHOR, EDITORIAL_POLICY_PATH } from '@/site';
 import TableOfContents from '@/components/TableOfContents.astro';
 import PostMeta from '@/components/PostMeta.astro';
@@ -15,6 +16,8 @@ interface Props {
   heroImage?: string;
   category?: string;
   tags?: string[];
+  conclusion?: string;
+  keyPoints?: string[];
   affiliates?: Array<{
     name: string;
     description: string;
@@ -36,6 +39,8 @@ const {
   heroImage,
   category,
   tags = [],
+  conclusion,
+  keyPoints = [],
   affiliates = [],
 } = Astro.props;
 
@@ -158,6 +163,9 @@ const breadcrumbJsonLd = {
         class="w-full h-48 sm:h-64"
       />
     </div>
+
+    <!-- 結論・要点ボックス（答え先出し） -->
+    <KeyPointsBox conclusion={conclusion} points={keyPoints} />
 
     <!-- 目次（あれば） -->
     <TableOfContents />

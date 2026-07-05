@@ -12,6 +12,9 @@ const posts = defineCollection({
     tags: z.array(z.string()).default([]),
     featured: z.boolean().default(false),
     draft: z.boolean().default(false),
+    // 記事冒頭の「結論・要点ボックス」（答え先出し）
+    conclusion: z.string().optional(),
+    keyPoints: z.array(z.string()).default([]),
     affiliates: z
       .array(
         z.object({

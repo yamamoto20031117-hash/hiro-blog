@@ -1,0 +1,26 @@
+---
+// 記事冒頭の「結論・要点ボックス」。長文を読まなくても答えが分かるように答え先出し。
+interface Props {
+  conclusion?: string;
+  points?: string[];
+}
+const { conclusion, points = [] } = Astro.props;
+---
+
+{(conclusion || points.length > 0) && (
+  <div class="rounded-2xl border-2 border-primary-200 bg-primary-50/60 p-5 mb-8">
+    <p class="flex items-center gap-1.5 text-sm font-bold text-primary-700 mb-2">
+      <span class="text-lg">✅</span>この記事の結論
+    </p>
+    {conclusion && <p class="text-sm text-gray-800 leading-relaxed mb-3">{conclusion}</p>}
+    {points.length > 0 && (
+      <ul class="space-y-1.5">
+        {points.map((p) => (
+          <li class="flex items-start gap-2 text-sm text-gray-700">
+            <span class="text-primary-500 mt-0.5 flex-shrink-0">▸</span><span>{p}</span>
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+)}
