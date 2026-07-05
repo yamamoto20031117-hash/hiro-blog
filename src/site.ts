@@ -8,6 +8,16 @@ export const SITE_KEYWORDS =
   'ガジェット,レビュー,比較,ランキング,おすすめ,イヤホン,モバイルバッテリー,充電器,家電,一人暮らし,買ってよかった';
 export const SITE_LOGO_EMOJI = '🎧';
 
+// ===== 法務・信頼性（1箇所で変更可） =====
+// ステマ規制(景品表示法・2023-10-01〜)対応の広告表示文。各記事・LP上部に明示。
+export const AD_DISCLOSURE_TEXT =
+  '本ページには広告（アフィリエイトリンク）が含まれます。当サイトはリンク経由の購入・お申し込みにより、売上の一部を報酬として受け取ることがあります。掲載順位や評価は報酬の有無で変わりません。';
+
+// 誠実なE-E-A-T：架空の個人ではなく「編集部」を著者主体にする。
+export const SITE_AUTHOR = '売れ筋ナビ編集部';
+export const CONTACT_PATH = '/contact';
+export const EDITORIAL_POLICY_PATH = '/editorial-policy';
+
 // ===== ヘッダーのナビ =====
 export const NAV = [
   { label: 'ランキング', href: '/ranking', icon: '🔥' },

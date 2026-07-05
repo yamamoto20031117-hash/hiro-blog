@@ -8,7 +8,7 @@ export default defineConfig({
     mdx(),
     // sitemap(),
   ],
-  site: 'https://hiroblog-lifehack.com',
+  site: 'https://www.hiroblog-lifehack.com',
   vite: {
     server: {
       watch: {

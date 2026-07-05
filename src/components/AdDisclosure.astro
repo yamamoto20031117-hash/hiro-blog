@@ -1,0 +1,19 @@
+---
+// ステマ規制対応：広告（アフィリエイト）を含むページの明確な表示。
+// 「目立つが過度に邪魔にならない」を意識。色だけでなくラベル文言で明示。
+import { AD_DISCLOSURE_TEXT, EDITORIAL_POLICY_PATH } from '@/site';
+interface Props {
+  label?: string; // 例: "PR" / "広告" / "アフィリエイト広告を含みます"
+  text?: string;
+  class?: string;
+}
+const { label = 'PR', text = AD_DISCLOSURE_TEXT, class: cls = '' } = Astro.props;
+---
+
+<aside class={`flex items-start gap-2.5 rounded-lg border border-gray-200 bg-gray-50 px-3.5 py-2.5 text-xs text-gray-600 ${cls}`} aria-label="広告・アフィリエイトの表示">
+  <span class="flex-shrink-0 mt-0.5 inline-block bg-gray-500 text-white font-bold px-1.5 py-0.5 rounded text-[10px] leading-none">{label}</span>
+  <p class="leading-relaxed">
+    {text}
+    <a href={EDITORIAL_POLICY_PATH} class="text-primary-600 hover:underline whitespace-nowrap">編集方針</a>
+  </p>
+</aside>

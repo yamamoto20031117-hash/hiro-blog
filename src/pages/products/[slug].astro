@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Thumb from '@/components/Thumb.astro';
+import AdDisclosure from '@/components/AdDisclosure.astro';
 import { PRODUCTS, getProduct, getProductImage } from '@/data/products';
-import { getCategoryByLabel, COLOR_MAP, SITE_NAME } from '@/site';
+import { getCategoryByLabel, COLOR_MAP, SITE_NAME, SITE_AUTHOR, EDITORIAL_POLICY_PATH } from '@/site';
 import { amazonUrl } from '@/consts';
 
 export async function getStaticPaths() {
@@ -38,6 +39,17 @@ const productJsonLd = {
   },
 };
 
+// FAQPage：画面に表示しているFAQと一致する内容のみ出力（架空FAQは出さない）
+const faqJsonLd = product.faq.length > 0 ? {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: product.faq.map((f) => ({
+    '@type': 'Question',
+    name: f.q,
+    acceptedAnswer: { '@type': 'Answer', text: f.a },
+  })),
+} : null;
+
 const CtaButton = 'inline-flex items-center justify-center gap-2 bg-accent-500 hover:bg-accent-600 text-white font-bold rounded-xl transition-colors shadow-sm';
 ---
 
@@ -46,6 +58,7 @@ const CtaButton = 'inline-flex items-center justify-center gap-2 bg-accent-500 h
   description={`${product.name}を徹底レビュー。${product.tagline}。特徴・スペック・メリット/デメリット・こんな人におすすめかまで、わかりやすく解説します。`}
 >
   <script type="application/ld+json" set:html={JSON.stringify(productJsonLd)} slot="head" />
+  {faqJsonLd && <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} slot="head" />}
 
   <article class="max-w-3xl mx-auto px-4 py-8">
 
@@ -57,6 +70,9 @@ const CtaButton = 'inline-flex items-center justify-center gap-2 bg-accent-500 h
       <span class="text-gray-700 truncate max-w-[180px]">{product.name}</span>
     </nav>
 
+    <!-- 広告（アフィリエイト）表示：ステマ規制対応 -->
+    <AdDisclosure class="mb-5" />
+
     <!-- ヒーロー -->
     <section class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mb-8">
       <div class="sm:flex">
@@ -67,6 +83,7 @@ const CtaButton = 'inline-flex items-center justify-center gap-2 bg-accent-500 h
           {cat && <span class={`inline-block ${c.bg} ${c.text} text-xs font-bold px-3 py-1 rounded-full w-fit mb-2`}>{cat.icon} {cat.label}</span>}
           <h1 class="text-xl sm:text-2xl font-extrabold text-gray-900 leading-tight">{product.name}</h1>
           <p class="text-sm text-accent-600 font-bold mt-1.5">{product.tagline}</p>
+          <p class="text-xs text-gray-400 mt-1">評価・調査：<a href={EDITORIAL_POLICY_PATH} class="text-primary-600 hover:underline">{SITE_AUTHOR}</a></p>
 
           <div class="flex items-center gap-2 mt-3">
             <span class="text-yellow-400 text-lg">{'★'.repeat(stars)}<span class="text-gray-200">{'★'.repeat(5 - stars)}</span></span>

@@ -2,7 +2,8 @@
 import BaseLayout from './BaseLayout.astro';
 import AffiliateBox from '@/components/AffiliateBox.astro';
 import Thumb from '@/components/Thumb.astro';
-import { getCategoryByLabel, SITE_NAME } from '@/site';
+import AdDisclosure from '@/components/AdDisclosure.astro';
+import { getCategoryByLabel, SITE_NAME, SITE_AUTHOR, EDITORIAL_POLICY_PATH } from '@/site';
 import TableOfContents from '@/components/TableOfContents.astro';
 import PostMeta from '@/components/PostMeta.astro';
 
@@ -137,6 +138,14 @@ const breadcrumbJsonLd = {
       category={category}
       tags={tags}
     />
+
+    <!-- 文責（誠実なE-E-A-T：架空の個人ではなく編集部） -->
+    <p class="text-xs text-gray-500 -mt-2 mb-4">
+      文・調査：<a href={EDITORIAL_POLICY_PATH} class="text-primary-600 hover:underline">{SITE_AUTHOR}</a>
+    </p>
+
+    <!-- 広告（アフィリエイト）表示：ステマ規制対応 -->
+    <AdDisclosure class="mb-6" />
 
     <!-- アイキャッチ（画像が無ければカテゴリ連動バナー） -->
     <div class="rounded-2xl overflow-hidden mb-8 shadow-md">

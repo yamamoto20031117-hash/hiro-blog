@@ -1,0 +1,85 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import { SITE_NAME, CONTACT_PATH } from '@/site';
+
+const sections = [
+  {
+    h: 'サイトの目的',
+    body: [
+      `${SITE_NAME}は、ガジェット・家電を中心に「今どれを買うべきか」で迷う方が、失敗せず自分に合った1つを選べるようにするための情報メディアです。売り込むことではなく、選ぶ手助けをすることを目的にしています。`,
+    ],
+  },
+  {
+    h: '情報の収集方法',
+    body: [
+      '各商品について、メーカー公式情報・販売ページの仕様、複数のレビューサイトや利用者の口コミ、価格比較サイトなどの公開情報を横断的に確認したうえで記事を作成しています。',
+      '「実際に使いました」という表現は、編集部が実際に使用・検証した場合にのみ使用します。調査ベースの記事は、その旨がわかる表現にとどめます。',
+    ],
+  },
+  {
+    h: '比較・ランキングの評価方法',
+    body: [
+      'ランキングや比較は、主に「使用頻度の高さ」「価格に対する満足度（コスパ）」「失敗しにくさ（定番・高評価・レビュー実績）」の観点で評価しています。',
+      '掲載順位や評価は、広告報酬の有無・金額によって操作しません。恣意的な順位付けを避け、評価の根拠となる観点を各ページに明示します。',
+    ],
+  },
+  {
+    h: '広告・アフィリエイトについて',
+    body: [
+      `${SITE_NAME}は、Amazonアソシエイトをはじめとするアフィリエイトプログラムに参加しています。リンク経由で購入・お申し込みがあった場合、売上の一部を報酬として受け取ることがあります。`,
+      '広告（アフィリエイトリンク）を含むページには、その旨を各ページ上部に明確に表示します（消費者庁のステルスマーケティング規制に対応）。広告リンクには rel="sponsored" を付与しています。',
+      '報酬を受け取ることは、記事の評価・順位に影響を与えません。',
+    ],
+  },
+  {
+    h: '商品提供を受けた場合の扱い',
+    body: [
+      'メーカー等から商品の提供やサンプル貸与を受けてレビューを行う場合は、その事実を該当記事に明示します。提供の有無にかかわらず、評価は公平に行います。',
+    ],
+  },
+  {
+    h: '情報の更新・誤りの修正',
+    body: [
+      '価格・仕様・在庫・キャンペーンは変動します。掲載情報は執筆時点のものであり、最新の価格・在庫は必ずリンク先の販売ページでご確認ください。',
+      '古くなった情報は定期的に見直し、更新します。誤りのご指摘をいただいた場合は、事実確認のうえ速やかに訂正します。お問い合わせは',
+    ],
+    contact: true,
+  },
+  {
+    h: 'AIの利用方針',
+    body: [
+      '記事作成の補助（構成案・要約・下調べの整理など）にAIを活用することがあります。ただし、価格・仕様・評価などの事実は人の目で確認し、無審査でAI生成物をそのまま公開することはありません。',
+    ],
+  },
+];
+---
+
+<BaseLayout
+  title={`編集方針｜${SITE_NAME}`}
+  description={`${SITE_NAME}の編集方針。情報の収集・比較・ランキング評価の方法、広告（アフィリエイト）ポリシー、情報更新・誤り修正の方針、AIの利用方針を記載しています。`}
+>
+  <section class="bg-gradient-to-br from-primary-700 to-primary-900 text-white py-12 px-4">
+    <div class="max-w-2xl mx-auto text-center">
+      <div class="text-4xl mb-3">🧭</div>
+      <h1 class="text-2xl sm:text-3xl font-bold mb-2">編集方針</h1>
+      <p class="text-sm opacity-90">{SITE_NAME}がどのように情報を集め、評価し、掲載しているか</p>
+    </div>
+  </section>
+
+  <div class="max-w-2xl mx-auto px-4 py-10 space-y-8">
+    {sections.map((s) => (
+      <section>
+        <h2 class="text-lg font-bold text-gray-900 mb-3 flex items-center gap-2">
+          <span class="w-1 h-5 bg-primary-500 rounded-full"></span>{s.h}
+        </h2>
+        <div class="space-y-3 text-sm text-gray-700 leading-relaxed">
+          {s.body.map((p) => <p>{p}{s.contact && p === s.body[s.body.length - 1] && (<a href={CONTACT_PATH} class="text-primary-600 hover:underline">お問い合わせ</a>)}{s.contact && p === s.body[s.body.length - 1] && 'からお願いします。'}</p>)}
+        </div>
+      </section>
+    ))}
+
+    <div class="text-xs text-gray-400 border-t border-gray-200 pt-6">
+      本方針は、消費者庁のステルスマーケティング規制、およびGoogleの「people-first content」の考え方を参考に定めています。
+    </div>
+  </div>
+</BaseLayout>

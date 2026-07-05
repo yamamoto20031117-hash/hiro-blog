@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://hiroblog.vercel.app/sitemap-index.xml
+
+Sitemap: https://www.hiroblog-lifehack.com/sitemap.xml
