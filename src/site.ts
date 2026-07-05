@@ -11,7 +11,7 @@ export const SITE_LOGO_EMOJI = '🛒';
 // ===== ヘッダーのナビ =====
 export const NAV = [
   { label: 'ランキング', href: '/ranking', icon: '🔥' },
-  { label: '診断で選ぶ', href: '/shindan', icon: '🎯' },
+  { label: '商品レビュー', href: '/products', icon: '📝' },
   { label: 'ガジェット', href: '/category/gadget', icon: '📱' },
   { label: '家電・生活', href: '/category/home', icon: '🏠' },
   { label: '節約・副業', href: '/category/money', icon: '💰' },

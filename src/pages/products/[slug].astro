@@ -145,6 +145,34 @@ const CtaButton = 'inline-flex items-center justify-center gap-2 bg-accent-500 h
       </div>
     </section>
 
+    <!-- リアルな口コミ・評判 -->
+    {product.reputation && (
+      <section class="mb-10">
+        <h2 class="text-xl font-bold text-gray-900 mb-1 flex items-center gap-2">
+          <span class="w-1 h-6 bg-yellow-400 rounded-full"></span>リアルな口コミ・評判
+        </h2>
+        <p class="text-xs text-gray-400 mb-4">各レビューサイト・口コミサイトで見られる傾向をまとめました（{SITE_NAME}調べ）。</p>
+        <div class="grid sm:grid-cols-2 gap-4">
+          <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
+            <h3 class="font-bold text-gray-800 mb-3 flex items-center gap-1.5">😊 良い口コミ</h3>
+            <ul class="space-y-2.5">
+              {product.reputation.good.map((v) => (
+                <li class="flex items-start gap-2 text-sm text-gray-700"><span class="text-yellow-400 mt-0.5">★</span><span>「{v}」</span></li>
+              ))}
+            </ul>
+          </div>
+          <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm">
+            <h3 class="font-bold text-gray-800 mb-3 flex items-center gap-1.5">🧐 気になる口コミ</h3>
+            <ul class="space-y-2.5">
+              {product.reputation.concern.map((v) => (
+                <li class="flex items-start gap-2 text-sm text-gray-700"><span class="text-gray-300 mt-0.5">☆</span><span>「{v}」</span></li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </section>
+    )}
+
     <!-- こんな人におすすめ -->
     <section class="mb-10">
       <h2 class="text-xl font-bold text-gray-900 mb-4 flex items-center gap-2">

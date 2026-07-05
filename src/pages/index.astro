@@ -1,8 +1,12 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import ArticleCard from '@/components/ArticleCard.astro';
+import Thumb from '@/components/Thumb.astro';
 import { getCollection } from 'astro:content';
-import { SITE_NAME, SITE_TAGLINE, CATEGORIES, COLOR_MAP, DIAGNOSES } from '@/site';
+import { SITE_NAME, SITE_TAGLINE, CATEGORIES, COLOR_MAP, getCategoryByLabel } from '@/site';
+import { PRODUCTS, getProductImage } from '@/data/products';
+
+const pickupProducts = PRODUCTS.slice(0, 4);
 
 const allPosts = (await getCollection('posts'))
   .filter(p => !p.data.draft)
@@ -38,9 +42,9 @@ const categorySections = CATEGORIES
           class="bg-accent-500 hover:bg-accent-600 text-white text-sm font-bold px-6 py-3 rounded-full transition-colors shadow">
           🔥 売れ筋ランキングを見る
         </a>
-        <a href="/shindan"
+        <a href="/products"
           class="bg-white/15 hover:bg-white/25 text-white text-sm font-bold px-6 py-3 rounded-full transition-colors border border-white/30">
-          🎯 診断で選ぶ
+          📝 商品レビューを見る
         </a>
       </div>
     </div>
@@ -99,29 +103,35 @@ const categorySections = CATEGORIES
       </section>
     )}
 
-    <!-- 診断で選ぶ -->
+    <!-- 注目の商品レビュー -->
     <section>
       <div class="flex items-center justify-between mb-4">
         <h2 class="text-lg font-bold text-gray-900 flex items-center gap-2">
-          <span class="text-2xl">🎯</span>診断で選ぶ
+          <span class="text-2xl">📝</span>注目の商品レビュー
         </h2>
-        <a href="/shindan" class="text-xs font-semibold px-3 py-1.5 rounded-full text-white bg-accent-500 hover:bg-accent-600 transition-colors">
-          すべての診断 →
+        <a href="/products" class="text-xs font-semibold px-3 py-1.5 rounded-full text-white bg-accent-500 hover:bg-accent-600 transition-colors">
+          すべて見る →
         </a>
       </div>
       <div class="grid sm:grid-cols-2 gap-4">
-        {DIAGNOSES.map(d => (
-          <a href={d.href} class="block bg-white rounded-2xl border-2 border-accent-500/30 hover:border-accent-500 p-5 transition-colors group">
-            <div class="flex items-center gap-3">
-              <span class="text-3xl flex-shrink-0">{d.icon}</span>
-              <div>
-                <span class="text-[11px] font-bold text-accent-600">{d.tag}</span>
-                <h3 class="font-bold text-gray-900 leading-snug group-hover:text-accent-600 transition-colors">{d.title}</h3>
-                <p class="text-xs text-gray-500 mt-0.5">{d.desc}</p>
+        {pickupProducts.map(p => {
+          const pc = getCategoryByLabel(p.category);
+          return (
+            <a href={`/products/${p.slug}`} class="flex bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden group">
+              <div class="w-24 flex-shrink-0">
+                <Thumb image={getProductImage(p.asin)} emoji={p.emoji} color={pc?.color ?? 'blue'} alt={p.name} class="w-full h-full min-h-[6rem]" />
               </div>
-            </div>
-          </a>
-        ))}
+              <div class="p-4 min-w-0 flex flex-col">
+                <h3 class="font-bold text-gray-900 text-sm leading-snug group-hover:text-primary-600 transition-colors line-clamp-2">{p.name}</h3>
+                <p class="text-xs text-accent-600 font-semibold mt-1 line-clamp-1">{p.tagline}</p>
+                <div class="mt-auto pt-2 flex items-center justify-between">
+                  <span class="text-yellow-400 text-xs">{'★'.repeat(Math.round(p.rating))}<span class="text-gray-500 ml-1">{p.rating.toFixed(1)}</span></span>
+                  <span class="text-sm font-bold text-primary-700">{p.price}</span>
+                </div>
+              </div>
+            </a>
+          );
+        })}
       </div>
     </section>
 
