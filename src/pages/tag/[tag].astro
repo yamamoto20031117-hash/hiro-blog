@@ -1,0 +1,65 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import ArticleCard from '@/components/ArticleCard.astro';
+import { getCollection } from 'astro:content';
+import { SITE_NAME } from '@/site';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('posts')).filter((p) => !p.data.draft);
+  const tagMap = new Map<string, typeof posts>();
+  for (const p of posts) {
+    for (const t of p.data.tags ?? []) {
+      if (!tagMap.has(t)) tagMap.set(t, []);
+      tagMap.get(t)!.push(p);
+    }
+  }
+  return [...tagMap.entries()].map(([tag, list]) => ({
+    params: { tag },
+    props: {
+      tag,
+      posts: list.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()),
+    },
+  }));
+}
+
+const { tag, posts } = Astro.props;
+// 記事が1本以下の薄いタグページはnoindex（仕様: タグ乱造でインデックスを汚さない）
+const thin = posts.length < 2;
+---
+
+<BaseLayout
+  title={`「${tag}」の記事一覧｜${SITE_NAME}`}
+  description={`${SITE_NAME}で「${tag}」に関する記事の一覧です。`}
+  noindex={thin}
+>
+  <section class="bg-gradient-to-br from-primary-700 to-primary-900 text-white py-10 px-4">
+    <div class="max-w-3xl mx-auto text-center">
+      <p class="text-primary-200 text-xs mb-2">タグ</p>
+      <h1 class="text-2xl sm:text-3xl font-bold">#{tag}</h1>
+    </div>
+  </section>
+
+  <div class="max-w-5xl mx-auto px-4 py-10">
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-lg font-bold text-gray-900">「{tag}」の記事 <span class="ml-1 text-sm font-normal text-gray-400">({posts.length}件)</span></h2>
+      <a href="/ranking" class="text-sm text-primary-600 hover:text-primary-800 font-medium">ランキングを見る →</a>
+    </div>
+    {posts.length > 0 ? (
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {posts.map((post) => (
+          <ArticleCard
+            title={post.data.title}
+            description={post.data.description ?? ''}
+            pubDate={post.data.pubDate}
+            slug={post.slug}
+            heroImage={post.data.heroImage}
+            category={post.data.category}
+            tags={post.data.tags}
+          />
+        ))}
+      </div>
+    ) : (
+      <p class="text-center py-16 text-gray-400">この タグの記事はまだありません。</p>
+    )}
+  </div>
+</BaseLayout>
