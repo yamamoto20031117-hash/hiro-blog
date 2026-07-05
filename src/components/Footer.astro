@@ -1,7 +1,7 @@
 ---
 import { SITE_NAME, SITE_TAGLINE, SITE_LOGO_EMOJI, CATEGORIES } from '@/site';
 const year = new Date().getFullYear();
-const footerCats = CATEGORIES.slice(0, 4); // 主要カテゴリ
+const footerCats = CATEGORIES.slice(0, 2); // コアカテゴリ（ガジェット・家電）
 ---
 
 <footer class="bg-gray-900 text-gray-300 mt-16">
@@ -15,7 +15,7 @@ const footerCats = CATEGORIES.slice(0, 4); // 主要カテゴリ
           {SITE_NAME}
         </h3>
         <p class="text-sm leading-relaxed text-gray-400">
-          {SITE_TAGLINE}。売れ筋を診断・ランキング・徹底比較で紹介する買い物ガイド。
+          {SITE_TAGLINE}。ガジェット・家電を実レビューと徹底比較・ランキングで紹介する買い物ガイド。
         </p>
       </div>
 

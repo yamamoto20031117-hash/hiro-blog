@@ -15,11 +15,13 @@ const allPosts = (await getCollection('posts'))
 const latestPosts = allPosts.slice(0, 6);
 const featuredPost = allPosts.find(p => p.data.featured) ?? allPosts[0];
 
-// 記事が1件以上あるカテゴリだけをホームに出す
+// ガジェット特化: ホームで前面に出すコアカテゴリのみ（他は残すがトップでは推さない）
+const CORE_CATEGORY_SLUGS = ['gadget', 'home'];
 const categorySections = CATEGORIES
+  .filter(cat => CORE_CATEGORY_SLUGS.includes(cat.slug))
   .map(cat => ({
     cat,
-    posts: allPosts.filter(p => p.data.category === cat.label).slice(0, 2),
+    posts: allPosts.filter(p => p.data.category === cat.label).slice(0, 3),
   }))
   .filter(s => s.posts.length > 0);
 ---
@@ -29,13 +31,13 @@ const categorySections = CATEGORIES
   <!-- ヒーロー -->
   <section class="bg-gradient-to-br from-primary-700 to-primary-900 text-white py-14 px-4">
     <div class="max-w-3xl mx-auto text-center">
-      <p class="text-primary-200 text-xs font-semibold tracking-widest mb-3">診断 × ランキング × 徹底比較</p>
+      <p class="text-primary-200 text-xs font-semibold tracking-widest mb-3">実レビュー × ランキング × 徹底比較</p>
       <h1 class="text-2xl sm:text-4xl font-bold mb-4 leading-tight">
         {SITE_TAGLINE}
       </h1>
       <p class="text-primary-100 text-sm sm:text-base max-w-xl mx-auto leading-relaxed mb-7">
-        ガジェット・家電・生活雑貨から節約・副業まで。いま売れている商品を、
-        <br class="hidden sm:block" />診断とランキングで「あなたに最適な1つ」に絞り込みます。
+        イヤホン・モバイルバッテリー・充電器・スマート家電から一人暮らし家電まで。
+        <br class="hidden sm:block" />いま買うべきガジェット・家電を、実レビューと比較で「失敗しない1つ」に絞り込みます。
       </p>
       <div class="flex flex-wrap justify-center gap-3">
         <a href="/ranking"
@@ -54,8 +56,8 @@ const categorySections = CATEGORIES
 
     <!-- カテゴリ入口 -->
     <section>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-        {CATEGORIES.slice(0, 4).map(cat => {
+      <div class="grid grid-cols-2 gap-3">
+        {CATEGORIES.slice(0, 2).map(cat => {
           const c = COLOR_MAP[cat.color] ?? COLOR_MAP['blue'];
           return (
             <a href={`/category/${cat.slug}`}

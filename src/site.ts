@@ -1,12 +1,12 @@
 // ===== サイト全体のブランド・構成（ここ1箇所を変えれば全ページ反映） =====
 
 export const SITE_NAME = '売れ筋ナビ';
-export const SITE_TAGLINE = '"今どれが買い？"を診断とランキングで解決';
+export const SITE_TAGLINE = 'ガジェット・家電の"買って正解"をレビューと比較で';
 export const SITE_DESCRIPTION =
-  'ガジェット・家電・生活雑貨から節約・副業まで、いま売れている商品を診断・ランキング・徹底比較でPR。あなたに最適な"買い"がすぐ見つかる買い物ガイド。';
+  'イヤホン・モバイルバッテリー・充電器・スマート家電から一人暮らし家電まで、いま買うべきガジェット・家電を実レビューと徹底比較・ランキングで紹介。失敗しない買い物ガイド。';
 export const SITE_KEYWORDS =
-  'おすすめ,ランキング,比較,売れ筋,診断,ガジェット,家電,生活雑貨,節約,副業,買ってよかった';
-export const SITE_LOGO_EMOJI = '🛒';
+  'ガジェット,レビュー,比較,ランキング,おすすめ,イヤホン,モバイルバッテリー,充電器,家電,一人暮らし,買ってよかった';
+export const SITE_LOGO_EMOJI = '🎧';
 
 // ===== ヘッダーのナビ =====
 export const NAV = [
@@ -14,7 +14,6 @@ export const NAV = [
   { label: '商品レビュー', href: '/products', icon: '📝' },
   { label: 'ガジェット', href: '/category/gadget', icon: '📱' },
   { label: '家電・生活', href: '/category/home', icon: '🏠' },
-  { label: '節約・副業', href: '/category/money', icon: '💰' },
 ];
 
 // ===== カテゴリ体系 =====
