@@ -1,0 +1,40 @@
+---
+// モバイル専用の追従CTA。閉じれる・広告(PR)明示・本文を隠さない(スクロール後に出現)。
+interface Props {
+  url: string;
+  name: string;
+  price?: string;
+}
+const { url, name, price } = Astro.props;
+---
+
+<div id="sticky-cta" class="md:hidden fixed bottom-0 inset-x-0 z-40 translate-y-full transition-transform duration-300" data-sticky-cta>
+  <div class="mx-2 mb-2 rounded-xl border border-gray-200 bg-white/95 backdrop-blur shadow-lg px-3 py-2 flex items-center gap-2.5">
+    <span class="flex-shrink-0 bg-gray-500 text-white font-bold px-1.5 py-0.5 rounded text-[9px] leading-none">PR</span>
+    <div class="flex-1 min-w-0">
+      <p class="text-xs font-bold text-gray-900 truncate">{name}</p>
+      {price && <p class="text-[11px] text-primary-700 font-bold">{price}</p>}
+    </div>
+    <a href={url} target="_blank" rel="sponsored noopener noreferrer nofollow"
+       class="flex-shrink-0 bg-accent-500 hover:bg-accent-600 text-white text-sm font-bold px-4 py-2 rounded-lg whitespace-nowrap">
+      Amazonで見る
+    </a>
+    <button id="sticky-cta-close" class="flex-shrink-0 w-7 h-7 flex items-center justify-center text-gray-400 hover:text-gray-700" aria-label="CTAを閉じる">
+      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+    </button>
+  </div>
+</div>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('[data-sticky-cta]');
+  if (bar) {
+    const KEY = 'stickyCtaDismissed';
+    const closeBtn = document.getElementById('sticky-cta-close');
+    let dismissed = sessionStorage.getItem(KEY) === '1';
+    const show = () => { if (!dismissed) bar.classList.remove('translate-y-full'); };
+    const hide = () => bar.classList.add('translate-y-full');
+    const onScroll = () => { (window.scrollY > 500 ? show() : hide()); };
+    closeBtn?.addEventListener('click', () => { dismissed = true; sessionStorage.setItem(KEY, '1'); hide(); });
+    if (!dismissed) window.addEventListener('scroll', onScroll, { passive: true });
+  }
+</script>

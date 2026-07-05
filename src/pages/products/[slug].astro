@@ -2,6 +2,7 @@
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Thumb from '@/components/Thumb.astro';
 import AdDisclosure from '@/components/AdDisclosure.astro';
+import StickyMobileCTA from '@/components/StickyMobileCTA.astro';
 import { PRODUCTS, getProduct, getProductImage } from '@/data/products';
 import { getCategoryByLabel, COLOR_MAP, SITE_NAME, SITE_AUTHOR, EDITORIAL_POLICY_PATH } from '@/site';
 import { amazonUrl } from '@/consts';
@@ -254,4 +255,6 @@ const CtaButton = 'inline-flex items-center justify-center gap-2 bg-accent-500 h
     )}
 
   </article>
+
+  <StickyMobileCTA url={buyUrl} name={product.name} price={product.price} />
 </BaseLayout>
