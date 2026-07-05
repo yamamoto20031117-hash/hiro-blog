@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Thumb from '@/components/Thumb.astro';
-import { PRODUCTS } from '@/data/products';
+import { PRODUCTS, getProductImage } from '@/data/products';
 import { getCategoryByLabel, SITE_NAME } from '@/site';
 ---
 
@@ -26,7 +26,7 @@ import { getCategoryByLabel, SITE_NAME } from '@/site';
         return (
           <a href={`/products/${p.slug}`} class="flex bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow overflow-hidden group">
             <div class="w-28 flex-shrink-0">
-              <Thumb emoji={p.emoji} color={cat?.color ?? 'blue'} class="w-full h-full min-h-[7rem]" />
+              <Thumb image={getProductImage(p.asin)} emoji={p.emoji} color={cat?.color ?? 'blue'} alt={p.name} class="w-full h-full min-h-[7rem]" />
             </div>
             <div class="p-4 min-w-0 flex flex-col">
               {cat && <span class="text-[11px] font-bold text-gray-400 mb-1">{cat.icon} {cat.label}</span>}

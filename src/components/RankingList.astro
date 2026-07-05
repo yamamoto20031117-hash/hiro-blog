@@ -1,6 +1,7 @@
 ---
 import { amazonUrl, amazonSearch } from '@/consts';
 import Thumb from '@/components/Thumb.astro';
+import { getProductImage } from '@/data/products';
 
 // ランキング表示部品。item は asin（→直リンク）か url（→検索等）どちらかを指定。
 export interface RankItem {
@@ -43,7 +44,7 @@ const linkOf = (it: RankItem) =>
 
         <!-- 画像/絵文字タイル -->
         <div class="flex-shrink-0 w-20 h-20 sm:w-24 sm:h-24 rounded-xl overflow-hidden shadow-sm">
-          <Thumb image={it.image} emoji={it.icon ?? '🛒'} color={tileColors[i % tileColors.length]} alt={it.name} class="w-full h-full" />
+          <Thumb image={it.image ?? getProductImage(it.asin)} emoji={it.icon ?? '🛒'} color={tileColors[i % tileColors.length]} alt={it.name} class="w-full h-full" />
         </div>
 
         <!-- 本体 -->

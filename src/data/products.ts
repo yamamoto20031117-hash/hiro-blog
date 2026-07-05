@@ -332,3 +332,11 @@ export const PRODUCTS: ProductReview[] = [
 export function getProduct(slug: string): ProductReview | undefined {
   return PRODUCTS.find((p) => p.slug === slug);
 }
+
+// PA-API解禁後、scripts/fetch-product-images.mjs が product-images.json を
+// { "<ASIN>": "<画像URL>" } で埋める。埋まれば全商品カード/LPが自動で実写真化。
+import productImages from './product-images.json';
+export function getProductImage(asin?: string): string | undefined {
+  if (!asin) return undefined;
+  return (productImages as Record<string, string>)[asin] || undefined;
+}

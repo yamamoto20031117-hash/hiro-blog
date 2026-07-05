@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import Thumb from '@/components/Thumb.astro';
-import { PRODUCTS, getProduct } from '@/data/products';
+import { PRODUCTS, getProduct, getProductImage } from '@/data/products';
 import { getCategoryByLabel, COLOR_MAP, SITE_NAME } from '@/site';
 import { amazonUrl } from '@/consts';
 
@@ -61,7 +61,7 @@ const CtaButton = 'inline-flex items-center justify-center gap-2 bg-accent-500 h
     <section class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mb-8">
       <div class="sm:flex">
         <div class="sm:w-2/5 h-56 sm:h-auto">
-          <Thumb emoji={product.emoji} color={color} label={cat?.label} class="w-full h-full min-h-[14rem]" />
+          <Thumb image={getProductImage(product.asin)} emoji={product.emoji} color={color} label={cat?.label} alt={product.name} class="w-full h-full min-h-[14rem]" />
         </div>
         <div class="p-6 flex flex-col">
           {cat && <span class={`inline-block ${c.bg} ${c.text} text-xs font-bold px-3 py-1 rounded-full w-fit mb-2`}>{cat.icon} {cat.label}</span>}
@@ -196,7 +196,7 @@ const CtaButton = 'inline-flex items-center justify-center gap-2 bg-accent-500 h
           {related.map((r) => r && (
             <a href={`/products/${r.slug}`} class="flex gap-3 bg-white border border-gray-100 rounded-2xl p-4 shadow-sm hover:shadow-md transition-shadow group">
               <div class="w-16 h-16 rounded-xl overflow-hidden flex-shrink-0">
-                <Thumb emoji={r.emoji} color={getCategoryByLabel(r.category)?.color ?? 'blue'} class="w-full h-full" />
+                <Thumb image={getProductImage(r.asin)} emoji={r.emoji} color={getCategoryByLabel(r.category)?.color ?? 'blue'} alt={r.name} class="w-full h-full" />
               </div>
               <div class="min-w-0">
                 <div class="font-bold text-gray-900 text-sm leading-snug group-hover:text-primary-600 transition-colors line-clamp-2">{r.name}</div>
