@@ -51,6 +51,20 @@ const faqJsonLd = product.faq.length > 0 ? {
   })),
 } : null;
 
+// パンくず構造化データ（ホーム > 商品レビュー > カテゴリ > 商品）
+const abs = (p: string) => new URL(p, Astro.site).toString();
+const crumbs = [
+  { name: 'ホーム', url: abs('/') },
+  { name: '商品レビュー', url: abs('/products') },
+  ...(cat ? [{ name: cat.label, url: abs(`/category/${cat.slug}`) }] : []),
+  { name: product.name, url: abs(`/products/${product.slug}`) },
+];
+const breadcrumbJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: crumbs.map((c, i) => ({ '@type': 'ListItem', position: i + 1, name: c.name, item: c.url })),
+};
+
 const CtaButton = 'inline-flex items-center justify-center gap-2 bg-accent-500 hover:bg-accent-600 text-white font-bold rounded-xl transition-colors shadow-sm';
 ---
 
@@ -60,6 +74,7 @@ const CtaButton = 'inline-flex items-center justify-center gap-2 bg-accent-500 h
 >
   <script type="application/ld+json" set:html={JSON.stringify(productJsonLd)} slot="head" />
   {faqJsonLd && <script type="application/ld+json" set:html={JSON.stringify(faqJsonLd)} slot="head" />}
+  <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} slot="head" />
 
   <article class="max-w-3xl mx-auto px-4 py-8">
 

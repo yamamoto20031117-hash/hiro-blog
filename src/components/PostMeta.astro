@@ -32,27 +32,21 @@ const updatedDateStr = updatedDate
   ? updatedDate.toLocaleDateString('ja-JP', { year: 'numeric', month: 'long', day: 'numeric' })
   : null;
 
-// カテゴリごとの色・アイコン定義
-const categoryStyle: Record<string, { bg: string; text: string; icon: string }> = {
-  'Uber稼ぎ方': { bg: 'bg-green-100', text: 'text-green-700', icon: '🚗' },
-  'クレカ修行':  { bg: 'bg-blue-100',  text: 'text-blue-700',  icon: '💳' },
-  '扶養・税金':  { bg: 'bg-orange-100', text: 'text-orange-700', icon: '📊' },
-};
-const style = category ? (categoryStyle[category] ?? { bg: 'bg-gray-100', text: 'text-gray-700', icon: '📝' }) : null;
-
-// カテゴリ → URL スラッグ変換
-const categorySlug: Record<string, string> = {
-  'Uber稼ぎ方': 'uber',
-  'クレカ修行': 'credit-card',
-  '扶養・税金': 'tax',
-};
+// カテゴリの色・アイコン・スラッグは site.ts に一元化（新カテゴリも自動対応）
+import { getCategoryByLabel, COLOR_MAP } from '@/site';
+const catMeta = category ? getCategoryByLabel(category) : undefined;
+const cc = catMeta ? COLOR_MAP[catMeta.color] : null;
+const style = catMeta && cc
+  ? { bg: cc.bg, text: cc.text, icon: catMeta.icon }
+  : (category ? { bg: 'bg-gray-100', text: 'text-gray-700', icon: '📝' } : null);
+const catHref = catMeta ? `/category/${catMeta.slug}` : (category ? `/category/${category.toLowerCase()}` : '#');
 ---
 
 <div class="mb-6">
   <!-- カテゴリバッジ -->
   {category && style && (
     <a
-      href={`/category/${categorySlug[category] ?? category.toLowerCase()}`}
+      href={catHref}
       class={`inline-flex items-center gap-1 text-xs font-semibold px-3 py-1 rounded-full mb-3 ${style.bg} ${style.text} hover:opacity-80 transition-opacity`}
     >
       <span>{style.icon}</span>
