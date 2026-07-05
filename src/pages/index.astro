@@ -15,6 +15,11 @@ const allPosts = (await getCollection('posts'))
 const latestPosts = allPosts.slice(0, 6);
 const featuredPost = allPosts.find(p => p.data.featured) ?? allPosts[0];
 
+// 人気の比較ランキング（高成約ページを前面化）
+const compareRankings = allPosts
+  .filter(p => p.data.category === 'ガジェット' && (p.data.tags ?? []).some(t => t.includes('ランキング')))
+  .slice(0, 4);
+
 // ガジェット特化: ホームで前面に出すコアカテゴリのみ（他は残すがトップでは推さない）
 const CORE_CATEGORY_SLUGS = ['gadget', 'home'];
 const categorySections = CATEGORIES
@@ -69,6 +74,33 @@ const categorySections = CATEGORIES
         })}
       </div>
     </section>
+
+    <!-- 人気の比較ランキング -->
+    {compareRankings.length > 0 && (
+      <section>
+        <div class="flex items-center justify-between mb-4">
+          <h2 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+            <span class="text-2xl">🔥</span>人気の比較ランキング
+          </h2>
+          <a href="/ranking" class="text-xs font-semibold px-3 py-1.5 rounded-full text-white bg-accent-500 hover:bg-accent-600 transition-colors">
+            すべて見る →
+          </a>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {compareRankings.map(post => (
+            <ArticleCard
+              title={post.data.title}
+              description={post.data.description ?? ''}
+              pubDate={post.data.pubDate}
+              slug={post.slug}
+              heroImage={post.data.heroImage}
+              category={post.data.category}
+              tags={post.data.tags}
+            />
+          ))}
+        </div>
+      </section>
+    )}
 
     <!-- 注目記事 -->
     {featuredPost && (
